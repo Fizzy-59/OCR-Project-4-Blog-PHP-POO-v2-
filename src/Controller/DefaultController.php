@@ -15,5 +15,9 @@ class DefaultController
         echo 'test';
     }
 
+    public function admin() {
+        echo 'admin';
+    }
+
 
 }

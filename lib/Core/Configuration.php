@@ -5,6 +5,7 @@ namespace Blog\Core;
 
 
 use Exception;
+use Adbar\Dot;
 
 class Configuration
 {
@@ -13,6 +14,9 @@ class Configuration
     public static function config()
     {
         // TODO : Need To Complete
+        self::$_vars['security'] = require(ROOT_DIR.'/config/security.php');
+        self::$_vars = new Dot(self::$_vars);
+
     }
 
     /**

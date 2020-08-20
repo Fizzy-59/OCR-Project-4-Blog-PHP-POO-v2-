@@ -4,6 +4,8 @@
 namespace Blog\Http;
 
 
+use Blog\Security\Session;
+
 class Request
 {
     private $request;
@@ -13,8 +15,9 @@ class Request
     public function __construct()
     {
         $this->request = $_POST;
-        $this->query = $_GET;
+        $this->query  = $_GET;
         $this->server = $_SERVER;
+        Session::init();
     }
 
     /**
