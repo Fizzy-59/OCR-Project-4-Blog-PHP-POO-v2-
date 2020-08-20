@@ -21,6 +21,7 @@ class Application
         $dotenv->load(ROOT_DIR.'/.env');
 
         // TODO : new Configuration
+        Configuration::config();
     }
 
     public function run()
