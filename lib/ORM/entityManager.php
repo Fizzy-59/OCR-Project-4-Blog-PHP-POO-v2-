@@ -17,4 +17,3 @@ $access = require_once ROOT_DIR."/config/database.php";
 
 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
 $entityManager = EntityManager::create($access, $config);
-

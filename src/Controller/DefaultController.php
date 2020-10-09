@@ -4,20 +4,23 @@
 namespace App\Controller;
 
 
-class DefaultController
+class DefaultController extends TwigRenderer
 {
 
-    public function home(){
-        echo 'home';
+    public function home() {
+        $twig = new TwigRenderer();
+        $twig->render('base.html.twig', ['the' => 'variables', 'go' => 'here']);
+
     }
 
-    public function test(){
-        echo 'test';
+    public function test() {
+        $twig = new TwigRenderer();
+        $twig->render('base.html.twig', ['the' => 'variables', 'go' => 'here']);
     }
 
     public function admin() {
-        echo 'admin';
+        $twig = new TwigRenderer();
+        $twig->render('admin/faker.html.twig', ['the' => 'variables', 'go' => 'here']);
+
     }
-
-
 }

@@ -2,7 +2,7 @@
 
 use Blog\Routing\Router;
 
-Router::add('/',     ['controller' => 'default', 'action' => 'home'] );
+Router::add('/home',     ['controller' => 'default', 'action' => 'home'] );
 Router::add('/test', ['controller' => 'default', 'action' => 'test'] );
-Router::add('/admin/test', ['controller' => 'default', 'action' => 'admin'] );
+Router::add('/admin', ['controller' => 'default', 'action' => 'admin'] );
 
