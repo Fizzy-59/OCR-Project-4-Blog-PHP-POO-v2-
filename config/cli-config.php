@@ -12,4 +12,5 @@ $application->bootstrap();
 
 // Create the CLI DOCTRINE
 require ROOT_DIR."/lib/ORM/entityManager.php";
+
 return ConsoleRunner::createHelperSet($entityManager);

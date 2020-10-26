@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity
@@ -15,6 +16,7 @@ class User
     // TODO : Complete and personalize
 
 
+    // FIELDS
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -38,9 +40,7 @@ class User
      */
     protected $created;
 
-
-    // GETTER & SETTER
-
+    // GETTERS & SETTERS
     /**
      * @return mixed
      */

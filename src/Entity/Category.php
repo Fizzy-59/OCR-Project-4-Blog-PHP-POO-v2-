@@ -14,6 +14,7 @@ class Category
 {
     // TODO : Complete and personalize
 
+    // FIELDS
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -33,8 +34,7 @@ class Category
     protected $created;
 
 
-    // GETTER & SETTER
-
+    // GETTERS & SETTERS
     /**
      * @return mixed
      */
@@ -60,7 +60,5 @@ class Category
     {
         return $this->created;
     }
-
-
 
 }
