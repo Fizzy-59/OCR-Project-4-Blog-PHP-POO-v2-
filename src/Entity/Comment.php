@@ -18,6 +18,7 @@ class Comment
 
     // TODO : Complete and personalize
 
+    // FIELDS
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -35,12 +36,6 @@ class Comment
      */
     protected $content;
 
-    /**
-     * @ORM\Column(type="string")
-     * @OneToMany(targetEntity="user", mappedBy="comment")
-     *
-     */
-    protected $user;
 
     /**
      * @ORM\Column(type="boolean")
@@ -48,20 +43,25 @@ class Comment
     protected $validate;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="datetime")
+     * @var DateTime
+     */
+    protected $created;
+
+    // RELATIONS
+    /**
      * @ManyToOne(targetEntity="Article")
      * @JoinColumn(name="article_id", referencedColumnName="id")
      */
     protected $article;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @var DateTime
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $created;
+    protected $user;
 
-
-    // GETTER & SETTER
+    // GETTERS & SETTERS
 
     /**
      * @return mixed
@@ -98,17 +98,17 @@ class Comment
     /**
      * @return mixed
      */
-    public function getAuthor()
+    public function getUser()
     {
-        return $this->author;
+        return $this->user;
     }
 
     /**
-     * @param mixed $author
+     * @param mixed $user
      */
-    public function setAuthor($author)
+    public function setUser($user)
     {
-        $this->author = $author;
+        $this->user = $user;
     }
 
     /**
@@ -137,7 +137,21 @@ class Comment
         return $this->created;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
 
+    /**
+     * @param mixed $article
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
+    }
 
 
 }

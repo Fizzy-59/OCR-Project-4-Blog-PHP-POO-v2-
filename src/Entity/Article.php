@@ -16,6 +16,7 @@ class Article
 {
     // TODO : Complete and personalize
 
+    // FIELDS
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -39,6 +40,13 @@ class Article
     protected $content;
 
     /**
+     * @ORM\Column(type="datetime")
+     * @var DateTime
+     */
+    protected $created;
+
+    // RELATIONS
+    /**
      * @ManyToOne(targetEntity="Category")
      * @JoinColumn(name="category_id", referencedColumnName="id")
      */
@@ -48,16 +56,9 @@ class Article
      * @ManyToOne(targetEntity="User")
      * @JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $author;
+    protected $user;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @var DateTime
-     */
-    protected $created;
-
-
-    // GETTER & SETTER
+    // GETTERS & SETTERS
 
     /**
      * @return mixed
@@ -110,17 +111,17 @@ class Article
     /**
      * @return mixed
      */
-    public function getAuthor()
+    public function getUser()
     {
-        return $this->author;
+        return $this->user;
     }
 
     /**
-     * @param mixed $author
+     * @param mixed $user
      */
-    public function setAuthor($author)
+    public function setUser($user)
     {
-        $this->author = $author;
+        $this->user = $user;
     }
 
     public function setCreated(DateTime $created)
@@ -131,6 +132,22 @@ class Article
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 
 

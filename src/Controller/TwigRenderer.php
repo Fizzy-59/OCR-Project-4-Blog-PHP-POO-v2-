@@ -9,12 +9,12 @@ use Twig\Loader\FilesystemLoader;
 
  class TwigRenderer
 {
-    protected function render($view, $params = [])
+     protected function render($view, $params = [])
     {
         $loader = new FilesystemLoader(ROOT_DIR.'/templates');
         $twig = new Environment($loader);
-
         $template = $twig->load($view);
+
         echo $template->render($params);
     }
 }
