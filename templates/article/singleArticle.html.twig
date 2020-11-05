@@ -1,0 +1,59 @@
+{% include 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+
+        {# Article #}
+        <div class="row">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ article.introduction }}</h6>
+                    <p class="card-text">{{ article.content }}</p>
+                    <h6 class="card-subtitle mb-2 text-muted">Auteur : {{ article.user.name }}</h6>
+
+                    {# Add Comment #}
+                    <p>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                           aria-expanded="false" aria-controls="collapseExample">
+                            Ajouter un commentaire </a>
+                    </p>
+
+                    {# Form #}
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <form action="/add_comment" method="post">
+                                <input type="text" id="comment" name="comment" required minlength="4">
+                        </div>
+                        <input type="submit"></div>
+                            </form>
+                </div>
+
+                {# Link to Home #}
+                <a href="/home" class="card-link">Retour à la home</a>
+
+            </div>
+        </div>
+    </div>
+
+    {# Comment #}
+    <div class="row">
+        {% for comment in article.comments %}
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p>{{ comment.content }}.</p>
+                        <footer class="blockquote-footer"> {{ comment.user.name }}
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    </div>
+
+{% endblock %}

@@ -29,11 +29,6 @@ class Comment
     /**
      * @ORM\Column(type="string")
      */
-    protected $title;
-
-    /**
-     * @ORM\Column(type="string")
-     */
     protected $content;
 
 
@@ -50,7 +45,7 @@ class Comment
 
     // RELATIONS
     /**
-     * @ManyToOne(targetEntity="Article")
+     * @ManyToOne(targetEntity="Article", inversedBy="comments")
      * @JoinColumn(name="article_id", referencedColumnName="id")
      */
     protected $article;
@@ -62,22 +57,6 @@ class Comment
     protected $user;
 
     // GETTERS & SETTERS
-
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param mixed $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
 
     /**
      * @return mixed
