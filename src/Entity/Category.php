@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @ORM\Entity
@@ -33,6 +34,13 @@ class Category
      */
     protected $created;
 
+    // RELATIONS
+
+    /**
+     * @OneToMany(targetEntity="Article", mappedBy="category")
+     */
+    protected $articles;
+
 
     // GETTERS & SETTERS
     /**
@@ -59,6 +67,30 @@ class Category
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * @param mixed $articles
+     */
+    public function setArticles($articles)
+    {
+        $this->articles = $articles;
     }
 
 }
