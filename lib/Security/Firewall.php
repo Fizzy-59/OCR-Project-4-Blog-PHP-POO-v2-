@@ -8,7 +8,6 @@ use Blog\Core\Configuration;
 
 class Firewall
 {
-
     public static function check($url)
     {
         // https://github.com/adbario/php-dot-notation

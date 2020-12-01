@@ -38,7 +38,7 @@ class GenerateFake
             $user->setName($name);
 
             //Generate Role
-            $role = $this->faker->word();
+            $role = 'User';
             $user->setRole($role);
 
             // Generate Date

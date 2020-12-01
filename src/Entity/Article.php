@@ -65,7 +65,6 @@ class Article
     protected $comments;
 
     // GETTERS & SETTERS
-
     /**
      * @return mixed
      */
