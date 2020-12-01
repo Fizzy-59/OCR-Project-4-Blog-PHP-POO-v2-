@@ -57,7 +57,6 @@ class Comment
     protected $user;
 
     // GETTERS & SETTERS
-
     /**
      * @return mixed
      */
@@ -130,6 +129,14 @@ class Comment
     public function setArticle($article)
     {
         $this->article = $article;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
 

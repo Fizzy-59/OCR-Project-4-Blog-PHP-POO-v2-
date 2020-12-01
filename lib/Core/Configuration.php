@@ -17,7 +17,6 @@ class Configuration
         self::$_vars['security'] = require(ROOT_DIR.'/config/security.php');
         self::$_vars['config']   = require(ROOT_DIR.'/config/config.php');
         self::$_vars = new Dot(self::$_vars);
-
     }
 
     /**
