@@ -24,13 +24,21 @@ class AdminController extends TwigRenderer
 
         // Render view
         $twig = new TwigRenderer();
+<<<<<<< HEAD
         $twig->render('admin/faker/faker.html.twig');
+=======
+        $twig->render('admin/faker/faker.html.twig', ['session' => $_SESSION]);
+>>>>>>> front
     }
 
     public function admin()
     {
         $twig = new TwigRenderer();
+<<<<<<< HEAD
         $twig->render('admin/faker.html.twig');
+=======
+        $twig->render('admin/faker.html.twig', ['session' => $_SESSION]);
+>>>>>>> front
     }
 
     /**
@@ -45,7 +53,11 @@ class AdminController extends TwigRenderer
 
         // Render View
         $twig = new TwigRenderer();
+<<<<<<< HEAD
         $twig->render('admin/comment/moderateComment.html.twig', ['comments' => $comments]);
+=======
+        $twig->render('admin/comment/moderateComment.html.twig', ['comments' => $comments, 'session' => $_SESSION]);
+>>>>>>> front
     }
 
     /**
@@ -80,7 +92,11 @@ class AdminController extends TwigRenderer
 
         // Render View
         $twig = new TwigRenderer();
+<<<<<<< HEAD
         $twig->render('admin/comment/moderateComment.html.twig', ['comments' => $comments]);
+=======
+        $twig->render('admin/comment/moderateComment.html.twig', ['comments' => $comments, 'session' => $_SESSION]);
+>>>>>>> front
     }
 
     /**
@@ -121,7 +137,11 @@ class AdminController extends TwigRenderer
 
         // Render View
         $twig = new TwigRenderer();
+<<<<<<< HEAD
         $twig->render('home/home.html.twig');
+=======
+        $twig->render('home/home.html.twig', ['session' => $_SESSION]);
+>>>>>>> front
     }
 
     /**
@@ -136,7 +156,11 @@ class AdminController extends TwigRenderer
 
         // Render View
         $twig = new TwigRenderer();
+<<<<<<< HEAD
         $twig->render('admin/article/addArticle.html.twig', ['allCategories' => $allCategories]);
+=======
+        $twig->render('admin/article/addArticle.html.twig', ['allCategories' => $allCategories, 'session' => $_SESSION]);
+>>>>>>> front
     }
 
     public function updateArticle()
@@ -183,7 +207,12 @@ class AdminController extends TwigRenderer
                 'allCategories' => $allCategories,
                 'title' => $title,
                 'introduction' => $introduction,
+<<<<<<< HEAD
                 'content' => $content
+=======
+                'content' => $content,
+                'session' => $_SESSION
+>>>>>>> front
             ]);
 
     }

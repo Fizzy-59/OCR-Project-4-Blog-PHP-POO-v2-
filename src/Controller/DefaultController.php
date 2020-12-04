@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 
@@ -23,3 +24,5 @@ class DefaultController extends TwigRenderer
 
 
 }
+=======
+>>>>>>> front

@@ -25,6 +25,7 @@ class ArticleController extends TwigRenderer
     }
 
     /**
+<<<<<<< HEAD
      * Display Articles by Category
      */
     public function articleByCategory()
@@ -40,6 +41,8 @@ class ArticleController extends TwigRenderer
     }
 
     /**
+=======
+>>>>>>> front
      * User add comment, pending for moderate
      */
     public function addComment()

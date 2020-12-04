@@ -6,17 +6,17 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\utils\Error;
+
+use Blog\Core\AbstractController;
 use Carbon\Carbon;
 
-class UserController extends TwigRenderer
+class UserController extends AbstractController
 {
     /**
      * Connection logic to simple User or Admin
      */
     public function connection()
     {
-        $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
-        $twig = new TwigRenderer();
 
         // Recover User
         $email = $_POST['email'];
@@ -38,7 +38,8 @@ class UserController extends TwigRenderer
                 $_SESSION['name'] = $user->getName();
                 $_SESSION['role'] = $user->getRole();
 
-                $twig->render('home/home.html.twig');
+
+                $this->render('home/home.html.twig', ['session' => $_SESSION]);
             } else {
                 echo 'Mauvais identifiant ou mot de passe ident pas bon !';
             }
@@ -52,30 +53,30 @@ class UserController extends TwigRenderer
     {
         $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
         $twig = new TwigRenderer();
-        $twig->render('login/login.html.twig');
+
+        $twig->render('login/login.html.twig', ['session' => $_SESSION]);
     }
 
     public function logout()
     {
         session_destroy();
 
-        // Render View
-        $twig = new TwigRenderer();
-        $twig->render('home/home.html.twig');
+
+        header("Location: /", 301);
     }
 
 
-
-
-
-
+    /**
+     * Register Logic
+     */
     public function register()
     {
         $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
 
         // Render View
         $twig = new TwigRenderer();
-        $twig->render('login/register.html.twig');
+
+        $twig->render('login/register.html.twig', ['session' => $_SESSION]);
     }
 
     public function registration()
@@ -86,7 +87,8 @@ class UserController extends TwigRenderer
         if ($_POST['password1'] != $_POST['password2']) {
             $error = Error::PASSWORD_ERROR;
             $twig = new TwigRenderer();
-            $twig->render('login/register.html.twig', ['error' => $error]);
+
+            $twig->render('login/register.html.twig', ['error' => $error, 'session' => $_SESSION]);
             die();
         }
 
@@ -106,7 +108,8 @@ class UserController extends TwigRenderer
 
         // Render View
         $twig = new TwigRenderer();
-        $twig->render('login/login.html.twig');
+
+        $twig->render('login/login.html.twig', ['session' => $_SESSION]);
     }
 
 }
