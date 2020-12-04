@@ -99,7 +99,7 @@ class GenerateFake
             $article->setIntroduction($intro);
 
             // Generate Content
-            $content = $this->faker->realText(200, 4);
+            $content = $this->faker->realText(650, 4);
             $article->setContent($content);
 
             // Link to User

@@ -1,0 +1,15 @@
+{% set pageName = 'Liste des catégories' %}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for category in categories %}
+        <div class="card col-lg-8 col-md-10 mx-auto mb-2" style="width: 40rem;">
+            <a href="../category?id={{ category.id }}">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center">{{ category.name }}</li>
+                </ul>
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}

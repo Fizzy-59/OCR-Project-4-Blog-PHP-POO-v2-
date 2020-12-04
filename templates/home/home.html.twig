@@ -1,64 +1,35 @@
-{% include "base.html.twig" %}
+{% set pageName = 'Listing des articles' %}
 
-{% block title %} Acceuil {% endblock %}
+
+{% extends "base.html.twig" %}
+
+{% block title %} Home {% endblock %}
 
 {% block body %}
 
-    {# Welcome message #}
     <div class="container">
+        {% for article in articles %}
         <div class="row">
-            <div class="col">
-                <div class="jumbotron">
-                    <h1 class="display-4">Hello, world!</h1>
-                    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-                        attention to featured content or information.</p>
-                    <hr class="my-4">
-                    <p>It uses utility classes for typography and spacing to space content out within the larger
-                        container.</p>
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-preview">
+                    <a href="../article?id={{ article.id }}">
+                        <h2 class="post-title">
+                            {{ article.title }}
+                        </h2>
+                        <h3 class="post-subtitle">
+                            {{ article.introduction }}
+                        </h3>
+                    </a>
+                    <a class="post-meta">Catégorie : <a href="../category?id={{ article.category.id }}" > {{ article.category.name }} </a>
+                        <a href="../category?id={{ category.id }}"></a>
+                    <p class="post-meta">Posté par {{ article.user.name }}
+                        <a href="#"></a>
+                        le {{ article.createdAt|date('d-m-Y à H:i') }} </p>
                 </div>
+                <hr>
             </div>
         </div>
-
-
-        {# Categories #}
-        <div class="row">
-            Liste des catégories, cliquez pour accéder à tout les articles en relation avec celle-ci.
-        </div>
-        <div class="row">
-            {% for category in categories %}
-                <div class="card" style="width: 18rem;">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <a href="../category?id={{ category.id }}">{{ category.name }}</a></li>
-                    </ul>
-                </div>
-            {% endfor %}
-        </div>
-        <br>
-
-        {# Articles #}
-        <div class="row">
-            <div class="col">
-                <div class="row">
-                    Liste des articles, cliquez pour accéder celui-ci.
-                </div>
-                <div class="row">
-                    {% for article in articles %}
-                        <div class="card" style="width: 18rem;">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <a href="../article?id={{ article.id }}">{{ article.title }}</a></li>
-                            </ul>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
+        {% endfor %}
     </div>
-
-
-
 
 {% endblock %}
