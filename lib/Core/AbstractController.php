@@ -17,10 +17,20 @@ abstract class AbstractController
 
     }
 
+    /**
+     * Render function using Twig templating
+     *
+     * @param $view
+     * @param array $params
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     protected function render($view, $params = [])
     {
         $loader = new FilesystemLoader(ROOT_DIR.'/templates');
         $twig = new Environment($loader);
+        $twig->addGlobal('session', $_SESSION);
         $template = $twig->load($view);
 
         echo $template->render($params);

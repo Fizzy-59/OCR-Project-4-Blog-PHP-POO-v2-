@@ -1,16 +1,19 @@
-{% include "base.html.twig" %}
+{% set pageName = 'Créer un article' %}
 
-<div class="container">
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
     <div class="row" id="row_style">
-        <h4 class="text-center">Submit new post</h4>
+        <h4 class="text-center">Nouvel article : </h4>
         <div class="col-md-4   col-md-offset-4">
-            <form method="post" action="/new_article">
+            <form method="post" action="/admin/new_article">
                 <div class="form-group">
-                    <input name="title" type="text" class="form-control" placeholder="Title">
+                    <input name="title" type="text" class="form-control" placeholder="Titre">
                 </div>
-                <textarea name="introduction" id="editor" cols="50" rows="10">Introduction...</textarea>
+                <textarea name="introduction" id="editor" cols="50" rows="10" placeholder="Introduction"></textarea>
                 <br>
-                <textarea name="content" id="editor" cols="50" rows="20">Contenu...</textarea>
+                <textarea name="content" id="editor" cols="50" rows="20" placeholder="Contenu"></textarea>
                 <br>
 
                 <div class="form-group">
@@ -24,11 +27,9 @@
                     </p>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Enrengistrement</button>
-                    </div> <!-- form-group// -->
+                    </div>
+                </div>
             </form>
         </div>
-        </form>
-
     </div>
-</div>
-</div>
+{% endblock %}

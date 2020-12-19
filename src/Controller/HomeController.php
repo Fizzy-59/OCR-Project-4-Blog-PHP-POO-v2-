@@ -4,14 +4,15 @@
 namespace App\Controller;
 
 
-class HomeController extends TwigRenderer
+use Blog\Core\AbstractController;
+
+class HomeController extends AbstractController
 {
+    /**
+     * Render view for Home
+     */
     public function displayHelloPage()
     {
-
-        $twig = new TwigRenderer();
-        $twig->render('home/hello.html.twig', ['session' => $_SESSION]);
-
+        $this->render('home/hello.html.twig');
     }
-
 }

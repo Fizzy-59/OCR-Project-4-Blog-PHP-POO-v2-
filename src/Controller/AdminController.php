@@ -6,58 +6,20 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\utils\GenerateFake;
+use Blog\Core\AbstractController;
 use Carbon\Carbon;
 
-class AdminController extends TwigRenderer
+class AdminController extends AbstractController
 {
     /**
-     *  Generate fake data for all Entities + linked together
-     *  Warning : Don't change ORDER
+     * Admin dashboard
      */
-    public function generateData()
+    public function dashboard()
     {
-        $data = new GenerateFake();
-        $data->generateUser();
-        $data->generateCategory();
-        $data->generateArticle();
-        $data->generateComment();
-
-        // Render view
-        $twig = new TwigRenderer();
-<<<<<<< HEAD
-        $twig->render('admin/faker/faker.html.twig');
-=======
-        $twig->render('admin/faker/faker.html.twig', ['session' => $_SESSION]);
->>>>>>> front
-    }
-
-    public function admin()
-    {
-        $twig = new TwigRenderer();
-<<<<<<< HEAD
-        $twig->render('admin/faker.html.twig');
-=======
-        $twig->render('admin/faker.html.twig', ['session' => $_SESSION]);
->>>>>>> front
-    }
-
-    /**
-     * Admin view for validate/refuse comment
-     */
-    public function displayModerateComment()
-    {
-        $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
-
         // Recover comments
         $comments = $this->entityManager->getRepository(":Comment")->findBy(['validate' => false]);
 
-        // Render View
-        $twig = new TwigRenderer();
-<<<<<<< HEAD
-        $twig->render('admin/comment/moderateComment.html.twig', ['comments' => $comments]);
-=======
-        $twig->render('admin/comment/moderateComment.html.twig', ['comments' => $comments, 'session' => $_SESSION]);
->>>>>>> front
+        $this->render('admin/dashboard.html.twig', ['comments' => $comments]);
     }
 
     /**
@@ -65,8 +27,6 @@ class AdminController extends TwigRenderer
      */
     public function moderate()
     {
-        $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
-
         $response = $_POST['validate'];
         $commentId = $_POST['id'];
 
@@ -74,8 +34,7 @@ class AdminController extends TwigRenderer
         $comment = $this->entityManager->getRepository(":Comment")->findOneById($commentId);
 
         // Determinate what buttons is pressed
-        if($response == 1 )
-        {
+        if ($response == 1) {
             $comment->setValidate(1);
 
             // Save in Database
@@ -87,16 +46,8 @@ class AdminController extends TwigRenderer
             $this->entityManager->flush();
         }
 
-        // Recover comments
-        $comments = $this->entityManager->getRepository(":Comment")->findBy(['validate' => false]);
-
-        // Render View
-        $twig = new TwigRenderer();
-<<<<<<< HEAD
-        $twig->render('admin/comment/moderateComment.html.twig', ['comments' => $comments]);
-=======
-        $twig->render('admin/comment/moderateComment.html.twig', ['comments' => $comments, 'session' => $_SESSION]);
->>>>>>> front
+        // Redirect to admin Dashboard
+        header("Location: /admin/dashboard", 301);
     }
 
     /**
@@ -104,14 +55,7 @@ class AdminController extends TwigRenderer
      */
     public function addArticle()
     {
-        // TODO : Need to Auth
-
-        $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
-
         // Recover Admin
-        $userId = $_SESSION['id'];
-        $user = $this->entityManager->getRepository(":User")->findOneById($userId);
-
         $title = $_POST['title'];
         $introduction = $_POST['introduction'];
         $content = $_POST['content'];
@@ -127,7 +71,7 @@ class AdminController extends TwigRenderer
         $article->setTitle($title);
         $article->setIntroduction($introduction);
         $article->setContent($content);
-        $article->setCreated(Carbon::now());
+        $article->setCreatedAt(Carbon::now());
         $article->setCategory($category);
         $article->setUser($user);
 
@@ -135,41 +79,59 @@ class AdminController extends TwigRenderer
         $this->entityManager->persist($article);
         $this->entityManager->flush();
 
-        // Render View
-        $twig = new TwigRenderer();
-<<<<<<< HEAD
-        $twig->render('home/home.html.twig');
-=======
-        $twig->render('home/home.html.twig', ['session' => $_SESSION]);
->>>>>>> front
+        // Redirect to dashboard Article
+        header("Location: /admin/dashboard", 301);
     }
 
     /**
-     *
+     * Render view for Add Article
      */
     public function displayAddArticle()
     {
-        $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
-
-        // Recover Categories
         $allCategories = $this->entityManager->getRepository(":Category")->findAll();
 
-        // Render View
-        $twig = new TwigRenderer();
-<<<<<<< HEAD
-        $twig->render('admin/article/addArticle.html.twig', ['allCategories' => $allCategories]);
-=======
-        $twig->render('admin/article/addArticle.html.twig', ['allCategories' => $allCategories, 'session' => $_SESSION]);
->>>>>>> front
+        $this->render('admin/article/addArticle.html.twig', ['allCategories' => $allCategories]);
     }
 
+    /**
+     * Display dashboard for update Article
+     */
+    public function dashboardArticle()
+    {
+        // Recover articles
+        $articles = $this->entityManager->getRepository(":Article")->findAll();
+
+        $this->render('admin/article/dashboardArticle.html.twig', ['articles' => $articles]);
+    }
+
+    /**
+     * Render view for update article page
+     */
+    public function displayUpdateArticle()
+    {
+        $articleId = $_POST['articleId'];
+
+        // Recover Article
+        $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
+
+        // Recover Categories
+        $categories = $this->entityManager->getRepository(":Category")->findAll();
+
+        $this->render('admin/article/updateArticle.html.twig', ['article' => $article, 'categories' => $categories]);
+    }
+
+    /**
+     * Logic for update Article
+     */
     public function updateArticle()
     {
-        $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
-
         $title = $_POST['title'];
         $introduction = $_POST['introduction'];
         $content = $_POST['content'];
+
+        //Recover article
+        $articleId = $_POST['articleId'];
+        $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
 
         // Recover Category for link her to Article
         $categoryName = $_POST['category'];
@@ -180,40 +142,30 @@ class AdminController extends TwigRenderer
         $article->setIntroduction($introduction);
         $article->setContent($content);
         $article->setCategory($category);
+        $article->setUpdatedAt(Carbon::now());
 
         // Save in Database
         $this->entityManager->persist($article);
         $this->entityManager->flush();
 
-
-
+        // Redirect to dashboard Article
+        header("Location: /admin/article_dashboard", 301);
     }
 
-    public function displayUpdateArticle()
+    /**
+     *  Generate fake data for all Entities + linked together
+     *  Warning : Don't change ORDER
+     *  Access URL : /admin/feed_database
+     */
+    public function generateData()
     {
-        $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
+        $data = new GenerateFake();
+        $data->generateUser();
+        $data->generateCategory();
+        $data->generateArticle();
+        $data->generateComment();
 
-        // Recover Categories
-        $allCategories = $this->entityManager->getRepository(":Category")->findAll();
-
-        // Recover Article
-        $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
-
-
-        // Render View
-        $twig = new TwigRenderer();
-        $twig->render('article/updateArticle.html.twig',
-            [
-                'allCategories' => $allCategories,
-                'title' => $title,
-                'introduction' => $introduction,
-<<<<<<< HEAD
-                'content' => $content
-=======
-                'content' => $content,
-                'session' => $_SESSION
->>>>>>> front
-            ]);
-
+        // Redirect to admin Dashboard
+        header("Location: /admin/dashboard", 301);
     }
 }

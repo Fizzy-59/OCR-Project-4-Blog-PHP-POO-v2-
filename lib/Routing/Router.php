@@ -32,7 +32,6 @@ class Router
                 return call_user_func_array([$controller, $route['action']], $_GET);
             }
         }
-        // TODO : Fix exception
         header('HTTP/1.0 404 not found');
         throw new \Exception('Not found.', 400);
     }

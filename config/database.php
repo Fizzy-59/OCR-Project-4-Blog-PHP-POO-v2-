@@ -1,6 +1,7 @@
 <?php
 
 // Database configuration for DOCTRINE
+
 return [
     'driver'   => 'pdo_mysql',
     'user'     => 'root',

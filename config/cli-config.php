@@ -1,5 +1,7 @@
 <?php
 
+// File for use CLI dictrine
+
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Blog\Core\Application;
 

@@ -5,54 +5,47 @@ namespace App\Controller;
 
 
 use App\Entity\Comment;
+use Blog\Core\AbstractController;
 use Carbon\Carbon;
 
-class ArticleController extends TwigRenderer
+class ArticleController extends AbstractController
 {
     /**
      * Display one Article
      */
-    public function singleArticle()
+    public function article()
     {
         $id = $_GET['id'];
-        $entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
-
-        $article = $entityManager->getRepository(":Article")->findOneById($id);
+        $article = $this->entityManager->getRepository(":Article")->findOneById($id);
 
         // Render View
-        $twig = new TwigRenderer();
-        $twig->render('article/singleArticle.html.twig', ['article' => $article, 'session' => $_SESSION]);
+        $this->render('article/article.html.twig', ['article' => $article]);
     }
 
     /**
-<<<<<<< HEAD
-     * Display Articles by Category
+     * Display all Articles
      */
-    public function articleByCategory()
+    public function articles()
     {
-        $id = $_GET['id'];
-        $entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
+        $categories = $this->entityManager->getRepository(":Category")->findAll();
+        $articles = $this->entityManager->getRepository(":Article")->findAll();
 
-        $category = $entityManager->getRepository(":Category")->find($id);
-
-        // Render View
-        $twig = new TwigRenderer();
-        $twig->render('article/relationArticles.html.twig', ['category' => $category]);
+        $this->render('article/articles.html.twig',
+            [
+                'categories' => $categories,
+                'articles' => $articles,
+            ]);
     }
 
     /**
-=======
->>>>>>> front
      * User add comment, pending for moderate
      */
     public function addComment()
     {
-        $this->entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
-
         $content = $_POST['comment'];
 
         // Recover Article
-        $articleId = (int) $_POST['articleId'];
+        $articleId = (int)$_POST['articleId'];
         $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
 
         // Recover User
@@ -72,7 +65,6 @@ class ArticleController extends TwigRenderer
         $this->entityManager->flush($comment);
 
         // Render View
-        $twig = new TwigRenderer();
-        $twig->render('article/singleArticle.html.twig', ['article' => $article, 'session' => $_SESSION]);
+        $this->render('article/article.html.twig', ['article' => $article]);
     }
 }

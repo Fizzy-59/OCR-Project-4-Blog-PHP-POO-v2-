@@ -3,39 +3,42 @@
 use Blog\Routing\Router;
 
 // HOME
-Router::add('/home', ['controller' => 'default', 'action' => 'home'] );
-
+Router::add('/',      ['controller' => 'home', 'action' => 'displayHelloPage'] );
+Router::add('/home',  ['controller' => 'home', 'action' => 'displayHelloPage'] );
 Router::add('/hello', ['controller' => 'home', 'action' => 'displayHelloPage'] );
 
-Router::add('/test', ['controller' => 'default', 'action' => 'test'] );
-
 // CONTENT
-Router::add('/article', ['controller' => 'Article', 'action' => 'singleArticle'] );
-Router::add('/category', ['controller' => 'Article', 'action' => 'articleByCategory'] );
 Router::add('/add_comment', ['controller' => 'default', 'action' => 'addComment'] );
+
 // ARTICLE
-Router::add('/article', ['controller' => 'Article', 'action' => 'singleArticle'] );
+Router::add('/article',     ['controller' => 'article', 'action' => 'article'] );
+Router::add('/articles',    ['controller' => 'article', 'action' => 'articles'] );
+Router::add('/add_comment', ['controller' => 'Article', 'action' => 'addComment'] );
 
 // CATEGORY
-Router::add('/category', ['controller' => 'Category', 'action' => 'articleByCategory'] );
-Router::add('/categories', ['controller' => 'Category', 'action' => 'categories'] );
+Router::add('/category',   ['controller' => 'category', 'action' => 'articleByCategory'] );
+Router::add('/categories', ['controller' => 'category', 'action' => 'categories'] );
 
 // LOGIN
-Router::add('/login', ['controller' => 'User', 'action' => 'login'] );
-Router::add('/logout', ['controller' => 'User', 'action' => 'logout'] );
-Router::add('/connection', ['controller' => 'User', 'action' => 'connection'] );
+Router::add('/login',      ['controller' => 'user', 'action' => 'login'] );
+Router::add('/logout',     ['controller' => 'user', 'action' => 'logout'] );
+Router::add('/connection', ['controller' => 'user', 'action' => 'connection'] );
 
 
 // REGISTRATION
-Router::add('/register', ['controller' => 'User', 'action' => 'register'] );
+Router::add('/register',     ['controller' => 'User', 'action' => 'register'] );
 Router::add('/registration', ['controller' => 'User', 'action' => 'registration'] );
 
-Router::add('/add_comment', ['controller' => 'Article', 'action' => 'addComment'] );
 
 // ADMIN
-Router::add('/admin/feed_database', ['controller' => 'Admin', 'action' => 'admin'] );
-Router::add('/admin/moderate_comment', ['controller' => 'Admin', 'action' => 'displayModerateComment'] );
-Router::add('/moderate', ['controller' => 'Admin', 'action' => 'moderate'] );
-Router::add('/add_article', ['controller' => 'Admin', 'action' => 'displayAddArticle'] );
-Router::add('/new_article', ['controller' => 'Admin', 'action' => 'addArticle'] );
+Router::add('/admin/feed_database',     ['controller' => 'admin', 'action' => 'generateData'] );
+Router::add('/admin/moderate',          ['controller' => 'admin', 'action' => 'moderate'] );
+Router::add('/admin/add_article',       ['controller' => 'admin', 'action' => 'displayAddArticle'] );
+Router::add('/admin/new_article',       ['controller' => 'admin', 'action' => 'addArticle'] );
+Router::add('/admin/modify_article',    ['controller' => 'admin', 'action' => 'updateArticle'] );
+Router::add('/admin/dashboard',         ['controller' => 'admin', 'action' => 'dashboard'] );
+Router::add('/admin/article_dashboard', ['controller' => 'admin', 'action' => 'dashboardArticle'] );
+Router::add('/admin/update_article',    ['controller' => 'admin', 'action' => 'displayUpdateArticle'] );
 
+// DEBUG
+Router::add('/test', ['controller' => 'default', 'action' => 'test'] );
