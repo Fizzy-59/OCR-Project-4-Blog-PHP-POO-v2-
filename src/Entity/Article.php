@@ -15,8 +15,6 @@ use Doctrine\ORM\Mapping\OneToMany;
  */
 class Article
 {
-    // TODO : Complete and personalize
-
     // FIELDS
     /**
      * @ORM\Id

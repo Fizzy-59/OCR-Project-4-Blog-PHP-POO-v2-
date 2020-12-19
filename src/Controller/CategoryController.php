@@ -4,18 +4,19 @@
 namespace App\Controller;
 
 
-class CategoryController extends TwigRenderer
+use Blog\Core\AbstractController;
+
+class CategoryController extends AbstractController
 {
 
+    /**
+     * Display all Categories
+     */
     public function categories()
     {
-        $entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
+        $categories = $this->entityManager->getRepository(":Category")->findAll();
 
-        $categories = $entityManager->getRepository(":Category")->findAll();
-
-        // Render View
-        $twig = new TwigRenderer();
-        $twig->render('category/categories.html.twig', ['categories' => $categories, 'session' => $_SESSION]);
+        $this->render('category/categories.html.twig', ['categories' => $categories]);
     }
 
     /**
@@ -24,13 +25,8 @@ class CategoryController extends TwigRenderer
     public function articleByCategory()
     {
         $id = $_GET['id'];
-        $entityManager = require ROOT_DIR . '/lib/ORM/entityManager.php';
+        $category = $this->entityManager->getRepository(":Category")->find($id);
 
-        $category = $entityManager->getRepository(":Category")->find($id);
-
-        // Render View
-        $twig = new TwigRenderer();
-        $twig->render('article/relationArticles.html.twig', ['category' => $category, 'session' => $_SESSION]);
+        $this->render('article/relationArticles.html.twig', ['category' => $category]);
     }
-
 }

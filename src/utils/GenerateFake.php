@@ -43,7 +43,7 @@ class GenerateFake
 
             // Generate Date
             $date = $this->faker->dateTime();
-            $user->setCreated($date);
+            $user->setCreatedAt($date);
 
             $this->entityManager->persist($user);
         }

@@ -15,9 +15,6 @@ use Doctrine\ORM\Mapping\OneToMany;
  */
 class Comment
 {
-
-    // TODO : Complete and personalize
-
     // FIELDS
     /**
      * @ORM\Id

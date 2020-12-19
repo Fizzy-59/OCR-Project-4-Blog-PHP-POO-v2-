@@ -8,6 +8,13 @@ use Blog\Core\Configuration;
 
 class Firewall
 {
+    /**
+     * Check role
+     *
+     * @param $url
+     * @return bool
+     * @throws \Exception
+     */
     public static function check($url)
     {
         // https://github.com/adbario/php-dot-notation

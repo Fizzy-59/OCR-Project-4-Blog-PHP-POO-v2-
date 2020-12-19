@@ -13,8 +13,6 @@ use Doctrine\ORM\Mapping\OneToMany;
  */
 class Category
 {
-    // TODO : Complete and personalize
-
     // FIELDS
     /**
      * @ORM\Id

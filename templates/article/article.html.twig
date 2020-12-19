@@ -10,77 +10,52 @@
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <h4 class="post-meta">Catégorie : {{ article.category.name }}</h4>
                     <p class="post-meta"> Posté par {{ article.user.name }}
-                        le {{ article.createdAt|date('d-m-Y à H:i') }}.</p>
+                        le {{ article.createdAt|date('d-m-Y à H:i') }}.
+                        {% if article.updatedAt != null %}
+                            Mis à jour le {{ article.updatedAt|date('d-m-Y à H:i') }}
+                        {% endif %}
+                    </p>
                     <h1 class="post-title">{{ article.title }}</h1>
                     <h3 class="post-subtile">{{ article.introduction }}</h3>
                     <p class="post-meta">{{ article.content }}</p>
                 </div>
             </div>
         </article>
+        <hr>
 
-
-<<<<<<< Updated upstream
-        {# Article #}
-        <div class="row">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{ article.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ article.introduction }}</h6>
-                    <p class="card-text">{{ article.content }}</p>
-                    <h6 class="card-subtitle mb-2 text-muted">Auteur : {{ article.user.name }}</h6>
-
-                    {# Add Comment #}
-<<<<<<< HEAD
-                    {% if session == true %}
-=======
-=======
-            <hr>
         {# Add Comment #}
         {% if session == true %}
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
->>>>>>> Stashed changes
->>>>>>> front
                     <p>
                         <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
                            aria-expanded="false" aria-controls="collapseExample">
                             Ajouter un commentaire </a>
                     </p>
-                    {# Form #}
+                </div>
+            </div>
+
+            {# Form #}
+            <div class="row">
+                <div class="col-lg-8 col-md-8 mx-auto">
                     <div class="collapse" id="collapseExample">
                         <div class="card card-body">
-                            <form action="/add_comment" method="post">
-                                <input type="text" id="comment" name="comment" required minlength="4">
-<<<<<<< HEAD
-                                <input type="hidden" name="articleId" value="{{ article.id }}"/>
-                                </div>
-=======
-<<<<<<< Updated upstream
-                        </div>
-                        <input type="submit"></div>
-=======
-                                <input type="hidden" name="articleId" value="{{ article.id }}"/>
->>>>>>> Stashed changes
->>>>>>> front
-                            </form>
+                            <div class="form-group ">
+                                <form action="/add_comment" method="post">
+                                    <input class="col-lg-6 col-sm-6 " type="text" id="comment" name="comment" required
+                                           minlength="3">
+                                    <input type="hidden" name="articleId" value="{{ article.id }}"/>
+                                    <input class="col-lg-2 col-sm-6 btn btn-primary" type="submit">
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
-                {% endif %}
-=======
-<<<<<<< Updated upstream
->>>>>>> front
-
-                {# Link to Home #}
-                <a href="/home" class="card-link">Retour à la home</a>
-
-=======
->>>>>>> Stashed changes
             </div>
-            <br
+
         {% endif %}
 
+        <br>
 
         {# Comment #}
         {% for comment in article.comments %}
@@ -106,6 +81,5 @@
         {% endfor %}
 
     </div>
-
 
 {% endblock %}

@@ -12,9 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
-    // TODO : Complete and personalize
-
-
     // FIELDS
     /**
      * @ORM\Id
@@ -47,7 +44,7 @@ class User
      * @ORM\Column(type="datetime")
      * @var DateTime
      */
-    protected $created;
+    protected $createdAt;
 
     // GETTERS & SETTERS
     /**
@@ -83,14 +80,14 @@ class User
         $this->role = $role;
     }
 
-    public function setCreated(DateTime $created)
+    public function setCreatedAt(DateTime $createdAt)
     {
-        $this->created = $created;
+        $this->createdAt = $createdAt;
     }
 
-    public function getCreated()
+    public function getCreatedAt()
     {
-        return $this->created;
+        return $this->createdAt;
     }
 
     /**
