@@ -34,7 +34,7 @@ class Article
     protected $introduction;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text", length=65535)
      */
     protected $content;
 

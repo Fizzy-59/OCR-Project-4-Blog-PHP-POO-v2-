@@ -72,6 +72,7 @@ class AdminController extends AbstractController
         $article->setIntroduction($introduction);
         $article->setContent($content);
         $article->setCreatedAt(Carbon::now());
+        $article->setUpdatedAt(Carbon::now());
         $article->setCategory($category);
         $article->setUser($user);
 
@@ -165,7 +166,5 @@ class AdminController extends AbstractController
         $data->generateArticle();
         $data->generateComment();
 
-        // Redirect to admin Dashboard
-        header("Location: /admin/dashboard", 301);
     }
 }

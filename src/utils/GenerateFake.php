@@ -41,6 +41,10 @@ class GenerateFake
             $role = 'User';
             $user->setRole($role);
 
+            // Generate Email
+            $email = $this->faker->email();
+            $user->setEmail($email);
+
             // Generate Date
             $date = $this->faker->dateTime();
             $user->setCreatedAt($date);
@@ -99,7 +103,7 @@ class GenerateFake
             $article->setIntroduction($intro);
 
             // Generate Content
-            $content = $this->faker->realText(650, 4);
+            $content = $this->faker->realText(400, 4);
             $article->setContent($content);
 
             // Link to User
@@ -114,7 +118,8 @@ class GenerateFake
 
             // Generate Date
             $date = $this->faker->dateTime();
-            $article->setCreated($date);
+            $article->setCreatedAt($date);
+            $article->setUpdatedAt($date);
 
             $this->entityManager->persist($article);
         }
@@ -133,10 +138,6 @@ class GenerateFake
         for ($i = 0; $i < 7; $i++)
         {
         $comment = New Comment();
-
-        // Generate Title
-            $title = $this->faker->word();
-            $comment->setTitle($title);
 
         // Generate Comment
             $content = $this->faker->sentence(5, true);
