@@ -21,16 +21,17 @@ class HomeController extends AbstractController
 
     public function contactForm()
     {
+        // Config constants
+        require '../config/swiftMailer.php';
+
         $name = $_POST['name'];
         $email = $_POST['email'];
-        $content = $_POST['content'];
+        $content = $_POST['message'];
 
         // Create the Transport
-        $transport = (new Swift_SmtpTransport('manioc.o2switch.net
-', 465, 'ssl'))
-            ->setUsername('contact@blogocr.devillezdeveloppement.info
-')
-            ->setPassword('OPnfw^l~wj[c');
+        $transport = (new Swift_SmtpTransport(EMAIL_HOST, EMAIL_PORT, EMAIL_ENCRYPTION))
+            ->setUsername(EMAIL_USERNAME)
+            ->setPassword(EMAIL_PASSWORD);
 
         // Create the Mailer using your created Transport
         $mailer = new Swift_Mailer($transport);
@@ -42,7 +43,6 @@ class HomeController extends AbstractController
             ->setBody($content);
 
         // Send the message
-        $result = $mailer->send($message);
-
+        $mailer->send($message);
     }
 }
