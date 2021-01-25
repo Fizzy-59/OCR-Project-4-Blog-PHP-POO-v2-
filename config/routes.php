@@ -3,9 +3,10 @@
 use Blog\Routing\Router;
 
 // HOME
-Router::add('/',      ['controller' => 'home', 'action' => 'displayHelloPage'] );
-Router::add('/home',  ['controller' => 'home', 'action' => 'displayHelloPage'] );
-Router::add('/hello', ['controller' => 'home', 'action' => 'displayHelloPage'] );
+Router::add('/',             ['controller' => 'home', 'action' => 'displayHelloPage'] );
+Router::add('/home',         ['controller' => 'home', 'action' => 'displayHelloPage'] );
+Router::add('/hello',        ['controller' => 'home', 'action' => 'displayHelloPage'] );
+Router::add('/contact_form', ['controller' => 'home', 'action' => 'contactForm'     ] );
 
 // CONTENT
 Router::add('/add_comment', ['controller' => 'default', 'action' => 'addComment'] );
@@ -23,6 +24,7 @@ Router::add('/categories', ['controller' => 'category', 'action' => 'categories'
 Router::add('/login',      ['controller' => 'user', 'action' => 'login'] );
 Router::add('/logout',     ['controller' => 'user', 'action' => 'logout'] );
 Router::add('/connection', ['controller' => 'user', 'action' => 'connection'] );
+Router::add('/forgot',     ['controller' => 'user', 'action' => 'forgot'] );
 
 
 // REGISTRATION

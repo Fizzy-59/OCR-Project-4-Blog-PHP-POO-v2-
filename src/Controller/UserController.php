@@ -43,14 +43,6 @@ class UserController extends AbstractController
     }
 
     /**
-     * Display login page
-     */
-    public function login()
-    {
-        $this->render('login/login.html.twig');
-    }
-
-    /**
      * Logout logic
      */
     public function logout()
@@ -89,7 +81,7 @@ class UserController extends AbstractController
         $user->setEmail($_POST['email']);
         $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
         $user->setRole('User');
-        $user->setCreated(Carbon::now());
+        $user->setCreatedAt(Carbon::now());
 
         // Save in Database
         $this->entityManager->persist($user);
@@ -97,5 +89,15 @@ class UserController extends AbstractController
 
         // Redirect to homePage
         header("Location: /", 301);
+    }
+
+
+    /**
+     * Display forgot password page
+     */
+    public function forgot()
+    {
+        $this->render('login/forgot.html.twig');
+
     }
 }

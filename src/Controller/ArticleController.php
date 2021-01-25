@@ -28,7 +28,7 @@ class ArticleController extends AbstractController
     public function articles()
     {
         $categories = $this->entityManager->getRepository(":Category")->findAll();
-        $articles = $this->entityManager->getRepository(":Article")->findAll();
+        $articles = $this->entityManager->getRepository(":Article")->findBy([], ['createdAt' => 'DESC']);
 
         $this->render('article/articles.html.twig',
             [
