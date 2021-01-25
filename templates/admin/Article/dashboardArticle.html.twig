@@ -14,10 +14,11 @@
                     <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Titre</th>
+                        <th scope="col" style="width: 40%">Titre</th>
                         <th scope="col">Categorie</th>
                         <th scope="col">Utilisateur</th>
-                        <th scope="col">Date</th>
+                        <th scope="col"  style="width: 20%" >Date</th>
+                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -34,6 +35,13 @@
                                 <form action="/admin/update_article" method="post">
                                     <input type="hidden" name="articleId" value="{{ article.id }}"/>
                                     <button type="submit" class="btn btn-success">Modifier</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form action="/admin/delete_article" method="post">
+                                    <input type="hidden" name="validate" value="0"/>
+                                    <input type="hidden" name="id" value="{{ article.id }}"/>
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
                                 </form>
                             </td>
                         </tr>

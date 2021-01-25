@@ -41,6 +41,7 @@ Router::add('/admin/modify_article',    ['controller' => 'admin', 'action' => 'u
 Router::add('/admin/dashboard',         ['controller' => 'admin', 'action' => 'dashboard'] );
 Router::add('/admin/article_dashboard', ['controller' => 'admin', 'action' => 'dashboardArticle'] );
 Router::add('/admin/update_article',    ['controller' => 'admin', 'action' => 'displayUpdateArticle'] );
+Router::add('/admin/delete_article',    ['controller' => 'admin', 'action' => 'deleteArticle'] );
 
 // DEBUG
 Router::add('/test', ['controller' => 'default', 'action' => 'test'] );

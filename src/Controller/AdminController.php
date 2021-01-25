@@ -154,6 +154,28 @@ class AdminController extends AbstractController
     }
 
     /**
+     * Delete Article & comments linked
+     */
+    public function deleteArticle()
+    {
+        $articleId = $_POST['id'];
+
+        $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
+        $comments = $this->entityManager->getRepository(":Comment")->findBy(['article' => $articleId]);
+
+        // Delete All comments linked at the article
+        foreach ($comments as $comment ) {
+            $this->entityManager->remove($comment);
+        }
+
+        // Save in Database
+        $this->entityManager->remove($article);
+        $this->entityManager->flush();
+
+        header("Location: /admin/article_dashboard", 301);
+    }
+
+    /**
      *  Generate fake data for all Entities + linked together
      *  Warning : Don't change ORDER
      *  Access URL : /admin/feed_database
@@ -165,6 +187,5 @@ class AdminController extends AbstractController
         $data->generateCategory();
         $data->generateArticle();
         $data->generateComment();
-
     }
 }
