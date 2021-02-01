@@ -27,8 +27,8 @@ class AdminController extends AbstractController
      */
     public function moderate()
     {
-        $response = $_POST['validate'];
-        $commentId = $_POST['id'];
+        $response = $this->request->request('validate');
+        $commentId = $this->request->request('id');
 
         // Recover comment linked to request
         $comment = $this->entityManager->getRepository(":Comment")->findOneById($commentId);
@@ -56,12 +56,12 @@ class AdminController extends AbstractController
     public function addArticle()
     {
         // Recover Admin
-        $title = $_POST['title'];
-        $introduction = $_POST['introduction'];
-        $content = $_POST['content'];
+        $title = $this->request->request('title');
+        $introduction = $this->request->request('introduction');
+        $content = $this->request->request('content');
 
         // Recover Category for link her to Article
-        $categoryName = $_POST['category'];
+        $categoryName = $this->request->request('category');;
         $category = $this->entityManager->getRepository(":Category")->findOneByName($categoryName);
 
         $user = $this->entityManager->getRepository(":User")->findOneById(23);
@@ -81,7 +81,7 @@ class AdminController extends AbstractController
         $this->entityManager->flush();
 
         // Redirect to dashboard Article
-        header("Location: /admin/dashboard", 301);
+        header("Location: /articles", 301);
     }
 
     /**
@@ -110,7 +110,7 @@ class AdminController extends AbstractController
      */
     public function displayUpdateArticle()
     {
-        $articleId = $_POST['articleId'];
+        $articleId = $this->request->request('articleId');
 
         // Recover Article
         $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
@@ -118,7 +118,11 @@ class AdminController extends AbstractController
         // Recover Categories
         $categories = $this->entityManager->getRepository(":Category")->findAll();
 
-        $this->render('admin/article/updateArticle.html.twig', ['article' => $article, 'categories' => $categories]);
+        $this->render('admin/article/updateArticle.html.twig',
+            [
+                'article' => $article,
+                'categories' => $categories
+            ]);
     }
 
     /**
@@ -126,16 +130,16 @@ class AdminController extends AbstractController
      */
     public function updateArticle()
     {
-        $title = $_POST['title'];
-        $introduction = $_POST['introduction'];
-        $content = $_POST['content'];
+        $title = $this->request->request('title');
+        $introduction = $this->request->request('introduction');
+        $content = $this->request->request('content');
 
         //Recover article
-        $articleId = $_POST['articleId'];
+        $articleId = $this->request->request('articleId');
         $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
 
         // Recover Category for link her to Article
-        $categoryName = $_POST['category'];
+        $categoryName = $this->request->request('category');
         $category = $this->entityManager->getRepository(":Category")->findOneByName($categoryName);
 
         // Update Article
@@ -158,7 +162,7 @@ class AdminController extends AbstractController
      */
     public function deleteArticle()
     {
-        $articleId = $_POST['id'];
+        $articleId = $this->request->request('id');
 
         $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
         $comments = $this->entityManager->getRepository(":Comment")->findBy(['article' => $articleId]);

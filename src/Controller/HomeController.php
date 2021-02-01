@@ -24,9 +24,9 @@ class HomeController extends AbstractController
         // Config constants
         require '../config/swiftMailer.php';
 
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $content = $_POST['message'];
+        $name    = $this->request->request('name');
+        $email   = $this->request->request('email');
+        $content = $this->request->request('message');
 
         // Create the Transport
         $transport = (new Swift_SmtpTransport(EMAIL_HOST, EMAIL_PORT, EMAIL_ENCRYPTION))
@@ -37,12 +37,15 @@ class HomeController extends AbstractController
         $mailer = new Swift_Mailer($transport);
 
         // Create a message
-        $message = (new Swift_Message('Message from Blog'))
+        $message = (new Swift_Message(MESSAGE))
             ->setFrom([$email => $name])
-            ->setTo(['contact@blogocr.devillezdeveloppement.info'])
+            ->setTo([EMAIL_ADDRESS])
             ->setBody($content);
 
         // Send the message
         $mailer->send($message);
+
+        // Redirect to home
+        header("Location: /", 301);
     }
 }

@@ -11,13 +11,18 @@ class Request
     private $request;
     private $query;
     private $server;
+    private $session;
 
     public function __construct()
     {
         $this->request = $_POST;
         $this->query  = $_GET;
         $this->server = $_SERVER;
-        Session::init();
+        $this->session  = new Session();
+    }
+
+    public function session() {
+        return $this->session;
     }
 
     /**

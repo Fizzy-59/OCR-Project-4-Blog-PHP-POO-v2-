@@ -5,6 +5,7 @@ namespace Blog\Routing;
 
 
 
+use Blog\Http\Request;
 use Blog\Security\Firewall;
 
 class Router
@@ -16,18 +17,19 @@ class Router
         self::$routes[$url] = $action;
     }
 
-    public static function match($url)
+    public static function match(Request $request)
     {
+        $url = $request->server('PATH_INFO');
         $url = (empty($url)) ? '/' : $url ;
 
         foreach (self::$routes as $pattern => $route)
         {
             if(preg_match('#^'.$pattern.'$#', $url))
             {
-                Firewall::check($url);
+                Firewall::check($url, $request);
 
                 $controller = 'App\\Controller\\'.ucfirst($route['controller']).'Controller';
-                $controller = new $controller();
+                $controller = new $controller($request);
 
                 return call_user_func_array([$controller, $route['action']], $_GET);
             }

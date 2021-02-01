@@ -9,17 +9,19 @@ use App\utils\Error;
 use Blog\Core\AbstractController;
 use Carbon\Carbon;
 
+
 class UserController extends AbstractController
 {
+
     /**
      * Connection logic to simple User or Admin
      */
     public function connection()
     {
-        // Recover User
-        $email = $_POST['email'];
-        $user = $this->entityManager->getRepository(":User")->findOneBy(['email' => $email]);
 
+        // Recover User
+        $email = $this->request->request('email');
+        $user = $this->entityManager->getRepository(":User")->findOneBy(['email' => $email]);
         if (empty($user)) {
             echo 'Mauvais identifiant ou mot de passe incorrect !';
         } else {
@@ -28,11 +30,7 @@ class UserController extends AbstractController
 
             // Start Session
             if ($isPasswordCorrect) {
-                session_start();
-                $_SESSION['id'] = $user->getId();
-                $_SESSION['name'] = $user->getName();
-                $_SESSION['role'] = $user->getRole();
-                $_SESSION['email'] = $email;
+                $this->session->write('user', $user);
 
                 // Redirect to home
                 header("Location: /", 301);
@@ -47,7 +45,7 @@ class UserController extends AbstractController
      */
     public function logout()
     {
-        session_destroy();
+        $this->session->destroy();
 
         // Redirect to home
         header("Location: /", 301);
@@ -66,29 +64,35 @@ class UserController extends AbstractController
      */
     public function registration()
     {
-        // Verify if password match
-        if ($_POST['password1'] != $_POST['password2']) {
-            $error = Error::PASSWORD_ERROR;
-            $this->render('login/register.html.twig', ['error' => $error]);
-            die();
+        if ($_POST) {
+
+
+            // Verify if password match
+            if ($this->request->request('password1') != $this->request->request('password2')) {
+                $error = Error::PASSWORD_ERROR;
+                $this->render('login/register.html.twig', ['error' => $error]);
+                die();
+            }
+
+            $password = $this->request->request('password1');
+
+            // Create new User
+            $user = new User();
+            $user->setName($this->request->request('name'));
+            $user->setEmail($this->request->request('email'));
+            $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
+            $user->setRole('User');
+            $user->setCreatedAt(Carbon::now());
+
+            // Save in Database
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            // Redirect to homePage
+            header("Location: /", 301);
         }
 
-        $password = $_POST['password1'];
-
-        // Create new User
-        $user = new User();
-        $user->setName($_POST['name']);
-        $user->setEmail($_POST['email']);
-        $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
-        $user->setRole('User');
-        $user->setCreatedAt(Carbon::now());
-
-        // Save in Database
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        // Redirect to homePage
-        header("Location: /", 301);
+        $this->render('login/register.html.twig');
     }
 
 
@@ -98,6 +102,5 @@ class UserController extends AbstractController
     public function forgot()
     {
         $this->render('login/forgot.html.twig');
-
     }
 }

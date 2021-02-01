@@ -24,7 +24,7 @@ class CategoryController extends AbstractController
      */
     public function articleByCategory()
     {
-        $id = $_GET['id'];
+        $id = $this->request->query('id');
         $category = $this->entityManager->getRepository(":Category")->find($id);
 
         $this->render('article/relationArticles.html.twig', ['category' => $category]);

@@ -9,25 +9,30 @@ use Exception;
 class Session
 {
 
-    private static $_session;
+    private $_session;
 
-
-    /**
-     * Initialize Session
-     */
-    public static function init()
-    {
+    public function __construct() {
         session_start();
-        self::$_session = $_SESSION;
+        $this->_session = $_SESSION;
     }
 
-    public static function read($key)
+    public function read($key)
     {
-        return self::$_session[$key];
+        return $this->_session[$key];
     }
 
-    public static function write($key, $value)
+    public function write($key, $value)
     {
-        self::$_session[$key] = $value;
+        $this->_session[$key] = $value;
+        $_SESSION[$key] = $value;
+    }
+
+    public function get() {
+        return $this->_session;
+    }
+
+    public function destroy()
+    {
+        session_destroy();
     }
 }

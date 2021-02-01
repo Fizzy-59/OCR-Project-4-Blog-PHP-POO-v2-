@@ -28,14 +28,14 @@
                 {% endif %}
 
                 {# Session admin #}
-                {% if session.role ==  'ROLE_ADMIN' %}
+                {% if session.user.role ==  'ROLE_ADMIN' %}
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/dashboard"> |- Tableau de bord -|</a>
                     </li>
                 {% endif %}
 
                 {# Session inactive #}
-                {% if session == false %}
+                {% if not session.user %}
                     <li class="dropdown order-1">
                         <button type="button" id="dropdownMenu1" data-toggle="dropdown"
                                 class="btn btn-outline-secondary dropdown-toggle">Login <span class="caret"></span>

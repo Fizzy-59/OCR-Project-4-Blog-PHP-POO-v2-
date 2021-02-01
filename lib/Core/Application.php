@@ -25,6 +25,6 @@ class Application
     public function run()
     {
         $request = new Request();
-        return Router::match($request->server('PATH_INFO') );
+        return Router::match($request);
     }
 }

@@ -15,7 +15,7 @@ class ArticleController extends AbstractController
      */
     public function article()
     {
-        $id = $_GET['id'];
+        $id = $this->request->query('id');
         $article = $this->entityManager->getRepository(":Article")->findOneById($id);
 
         // Render View
@@ -42,14 +42,15 @@ class ArticleController extends AbstractController
      */
     public function addComment()
     {
-        $content = $_POST['comment'];
+        // Recover comment
+        $content = $this->request->request('comment');
 
         // Recover Article
-        $articleId = (int)$_POST['articleId'];
+        $articleId = $this->request->request('articleId');
         $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
 
-        // Recover User
-        $userId = $_SESSION['id'];
+        // Recover UserId
+        $userId =  $this->session->read('user')->getId();
         $user = $this->entityManager->getRepository(":User")->findOneById($userId);
 
         // Add new Comment
