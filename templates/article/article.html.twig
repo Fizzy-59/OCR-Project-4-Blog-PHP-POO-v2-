@@ -35,6 +35,13 @@
                 </div>
             </div>
 
+            {# Error #}
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+
             {# Form #}
             <div class="row">
                 <div class="col-lg-8 col-md-8 mx-auto">
@@ -62,7 +69,7 @@
             {% if comment.validate == true %}
                 <div class="row mb-2">
                     <div class="col-lg-8 col-md-10 mx-auto">
-                        <div class="card card-white post">
+                        <div class="card card-white post p-2">
                             <div class="post-heading">
                                 <div class="float-left meta">
                                     <div class="title h5">

@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Comment;
+use Blog\Validator\Validator;
 use Blog\Core\AbstractController;
 use Carbon\Carbon;
 
@@ -42,15 +43,23 @@ class ArticleController extends AbstractController
      */
     public function addComment()
     {
-        // Recover comment
-        $content = $this->request->request('comment');
-
         // Recover Article
         $articleId = $this->request->request('articleId');
         $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
 
+        // Recover comment
+        $content = $this->request->request('comment');
+        if (Validator::isEmpty($content)) {
+            $error = 'Le commentaire ne peut être vide.';
+            $this->render('article/article.html.twig',
+                [
+                    'article' => $article,
+                    'error' => $error,
+                ]);
+        };
+
         // Recover UserId
-        $userId =  $this->session->read('user')->getId();
+        $userId = $this->session->read('user')->getId();
         $user = $this->entityManager->getRepository(":User")->findOneById($userId);
 
         // Add new Comment

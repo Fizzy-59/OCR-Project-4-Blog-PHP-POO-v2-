@@ -12,21 +12,21 @@ use Carbon\Carbon;
 
 class UserController extends AbstractController
 {
-
     /**
      * Connection logic to simple User or Admin
      */
     public function connection()
     {
-
         // Recover User
         $email = $this->request->request('email');
+        $password = $this->request->request('password');
         $user = $this->entityManager->getRepository(":User")->findOneBy(['email' => $email]);
+
         if (empty($user)) {
             echo 'Mauvais identifiant ou mot de passe incorrect !';
         } else {
             // Check for match password
-            $isPasswordCorrect = password_verify($_POST['password'], $user->getPassword());
+            $isPasswordCorrect = password_verify($password, $user->getPassword());
 
             // Start Session
             if ($isPasswordCorrect) {
@@ -65,10 +65,11 @@ class UserController extends AbstractController
     public function registration()
     {
         if ($_POST) {
-
+            $password1 = $this->request->request('password1');
+            $password2 = $this->request->request('password2');
 
             // Verify if password match
-            if ($this->request->request('password1') != $this->request->request('password2')) {
+            if ($password1 != $password2) {
                 $error = Error::PASSWORD_ERROR;
                 $this->render('login/register.html.twig', ['error' => $error]);
                 die();
@@ -83,7 +84,6 @@ class UserController extends AbstractController
             $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
             $user->setRole('User');
             $user->setCreatedAt(Carbon::now());
-
             // Save in Database
             $this->entityManager->persist($user);
             $this->entityManager->flush();
@@ -94,7 +94,6 @@ class UserController extends AbstractController
 
         $this->render('login/register.html.twig');
     }
-
 
     /**
      * Display forgot password page
