@@ -34,8 +34,6 @@ class Router
                 return call_user_func_array([$controller, $route['action']], $_GET);
             }
         }
-        header('HTTP/1.0 404 not found');
-        throw new \Exception('Not found.', 400);
+        header("Location: /", 301);
     }
-
 }
