@@ -20,24 +20,24 @@ class UserController extends AbstractController
     {
         // Recover User
         $email = $this->request->request('email');
+        if (Validator::isNotAnEmail($email)) $errors[] = Error::USER_NOT_FOUND;
+
         $password = $this->request->request('password');
+        if (Validator::checkMinMaxSmall($password)) $errors[] = Error::USER_NOT_FOUND;
+
         $user = $this->entityManager->getRepository(":User")->findOneBy(['email' => $email]);
+        if (empty($user)) $errors[] = Error::USER_NOT_FOUND;
 
-        if (empty($user)) {
-            echo 'Mauvais identifiant ou mot de passe incorrect !';
+        $matchPassword = $user->getPassword();
+        if ($matchPassword != null) $isPasswordCorrect = password_verify($password, $matchPassword);
+
+        if (!$isPasswordCorrect) $errors[] = Error::USER_NOT_FOUND;
+
+        if($errors) {
+            $this->render('home/hello.html.twig', ['errors' => $errors[0]]);
         } else {
-            // Check for match password
-            $isPasswordCorrect = password_verify($password, $user->getPassword());
-
-            // Start Session
-            if ($isPasswordCorrect) {
-                $this->session->write('user', $user);
-
-                // Redirect to home
-                header("Location: /", 301);
-            } else {
-                echo 'Mauvais identifiant ou mot de passe incorrect !';
-            }
+            $this->session->write('user', $user);
+            header("Location: /", 301);
         }
     }
 
@@ -53,28 +53,19 @@ class UserController extends AbstractController
     }
 
     /**
-     * Display register page
-     */
-    public function register()
-    {
-        $this->render('login/register.html.twig');
-    }
-
-    /**
      * Register logic for save a new User
      */
     public function registration()
     {
         if ($_POST) {
             $name = $this->request->request('name');
-            if (Validator::isEmpty($name)) {
-                $errors[] = Error::NAME_ERROR;
-            }
+            if (Validator::isEmpty($name)) $errors[] = Error::NAME_ERROR;
+            if (Validator::checkMinMaxSmall($name)) $errors[] = Error::NAME_LENGHT_ERROR;
 
             $email = $this->request->request('email');
-            if (Validator::isNotAnEmail($email)) {
-                $errors[] = Error::EMAIL_ERROR;
-            }
+            if (Validator::isNotAnEmail($email)) $errors[] = Error::EMAIL_ERROR;
+            $emailExist = $this->entityManager->getRepository(":User")->findOneBy(['email' => $email]);
+            if ($emailExist) $errors[] = Error::EMAIL_EXIST;
 
             $password1 = $this->request->request('password1');
             $password2 = $this->request->request('password2');
@@ -82,6 +73,7 @@ class UserController extends AbstractController
             if ($password1 != $password2) {
                 $errors[] = Error::PASSWORD_ERROR;
             }
+            if (Validator::checkMinMaxSmall($password1)) $errors[] = Error::PASSWORD_LENGHT_ERROR;
 
             // Handle errors
             if ($errors) $this->render('login/register.html.twig',

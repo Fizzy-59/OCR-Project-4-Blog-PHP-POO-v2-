@@ -36,6 +36,7 @@
 
                 {# Session inactive #}
                 {% if not session.user %}
+
                     <li class="dropdown order-1">
                         <button type="button" id="dropdownMenu1" data-toggle="dropdown"
                                 class="btn btn-outline-secondary dropdown-toggle">Login <span class="caret"></span>
@@ -59,8 +60,12 @@
                                                 oublié</a></small>
                                     </div>
                                     <div class="form-group text-center">
-                                        <small><a href="/register" class="btn btn-primary">S'enrengistrer</a></small>
+                                        <small><a href="/registration" class="btn btn-primary">S'enrengistrer</a></small>
                                     </div>
+                                    {# Errors #}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ error }}Identifiant incorrect.
+                                        </div>
                                 </form>
                             </li>
                         </ul>

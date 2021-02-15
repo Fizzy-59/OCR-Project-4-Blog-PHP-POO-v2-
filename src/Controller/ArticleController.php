@@ -50,12 +50,14 @@ class ArticleController extends AbstractController
 
         // Recover comment
         $content = $this->request->request('comment');
-        if (Validator::isEmpty($content)) {
-            $error = Error::COMMENT_ERROR;
+        if (Validator::isEmpty($content)) $errors[] = Error::COMMENT_ERROR;
+        if (Validator::checkMinMaxBig($content))  $errors[] = Error::CONTENT_LENGHT_ERROR;
+
+        if ($errors) {
             $this->render('article/article.html.twig',
                 [
                     'article' => $article,
-                    'error' => $error,
+                    'errors' => $errors,
                 ]);
         };
 

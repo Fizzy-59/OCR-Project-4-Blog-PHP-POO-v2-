@@ -28,7 +28,6 @@ Router::add('/forgot',     ['controller' => 'user', 'action' => 'forgot'] );
 
 
 // REGISTRATION
-Router::add('/register',     ['controller' => 'User', 'action' => 'register'] );
 Router::add('/registration', ['controller' => 'User', 'action' => 'registration'] );
 
 

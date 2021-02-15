@@ -38,6 +38,12 @@
                 <p>Vous pouvez me contacter en remplissant le formulaire suivant :</p>
 
                 {# Form contact #}
+                {# Errors #}
+                {% for error in errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
                 <form name="contactForm" id="contactForm" method="post" action="/contact_form">
                     <input type="hidden" name="subject" value="Formulaire de contact">
                     <input type="hidden" name="access" value="stopspam">
@@ -45,14 +51,17 @@
                         <div class="form-group floating-label-form-group controls">
                             <label>Nom et prénom</label>
                             <input type="text" class="form-control" placeholder="Nom et prénom" name="name" id="name"
-                                   required data-validation-required-message="Veuillez entrer vos noms et prénoms.">
+                                   required
+                                   data-validation-required-message="Veuillez entrer vos noms et prénoms."
+                                   value="{{ name }}">
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">
                             <label>Adresse Email</label>
                             <input type="email" class="form-control" placeholder="Adresse Email" name="email" id="email"
-                                   required data-validation-required-message="Veuillez votre adresse email.">
+                                   required data-validation-required-message="Veuillez votre adresse email."
+                                   value="{{ email }}">
                         </div>
                     </div>
                     <div class="control-group">
@@ -60,7 +69,8 @@
                             <label>Message</label>
                             <textarea rows="5" class="form-control" placeholder="Message" name="message" id="message"
                                       required
-                                      data-validation-required-message="Veuillez entrer un message."></textarea>
+                                      data-validation-required-message="Veuillez entrer un message.">{{ content }}
+                            </textarea>
                         </div>
                     </div>
                     <br>

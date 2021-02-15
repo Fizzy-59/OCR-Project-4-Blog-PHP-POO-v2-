@@ -35,12 +35,12 @@
                 </div>
             </div>
 
-            {# Error #}
-            {% if error %}
+            {# Errors #}
+            {% for error in errors %}
                 <div class="alert alert-danger" role="alert">
-                    {{ error }}
+                    {{ errors }}
                 </div>
-            {% endif %}
+            {% endfor %}
 
             {# Form #}
             <div class="row">
