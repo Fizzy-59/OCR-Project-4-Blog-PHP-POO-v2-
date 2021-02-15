@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Comment;
+use App\utils\Error;
 use Blog\Validator\Validator;
 use Blog\Core\AbstractController;
 use Carbon\Carbon;
@@ -50,7 +51,7 @@ class ArticleController extends AbstractController
         // Recover comment
         $content = $this->request->request('comment');
         if (Validator::isEmpty($content)) {
-            $error = 'Le commentaire ne peut être vide.';
+            $error = Error::COMMENT_ERROR;
             $this->render('article/article.html.twig',
                 [
                     'article' => $article,

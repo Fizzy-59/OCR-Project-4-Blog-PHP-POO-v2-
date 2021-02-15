@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\utils\Error;
 use Blog\Core\AbstractController;
+use Blog\Validator\Validator;
 use Carbon\Carbon;
 
 
@@ -65,22 +66,37 @@ class UserController extends AbstractController
     public function registration()
     {
         if ($_POST) {
+            $name = $this->request->request('name');
+            if (Validator::isEmpty($name)) {
+                $errors[] = Error::NAME_ERROR;
+            }
+
+            $email = $this->request->request('email');
+            if (Validator::isNotAnEmail($email)) {
+                $errors[] = Error::EMAIL_ERROR;
+            }
+
             $password1 = $this->request->request('password1');
             $password2 = $this->request->request('password2');
-
             // Verify if password match
             if ($password1 != $password2) {
-                $error = Error::PASSWORD_ERROR;
-                $this->render('login/register.html.twig', ['error' => $error]);
-                die();
+                $errors[] = Error::PASSWORD_ERROR;
             }
+
+            // Handle errors
+            if ($errors) $this->render('login/register.html.twig',
+                [
+                    'errors' => $errors,
+                    'name' => $name,
+                    'email' => $email
+                ]);
 
             $password = $this->request->request('password1');
 
             // Create new User
             $user = new User();
-            $user->setName($this->request->request('name'));
-            $user->setEmail($this->request->request('email'));
+            $user->setName($name);
+            $user->setEmail($email);
             $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
             $user->setRole('User');
             $user->setCreatedAt(Carbon::now());
