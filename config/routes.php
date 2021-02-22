@@ -36,11 +36,11 @@ Router::add('/admin/feed_database',     ['controller' => 'admin', 'action' => 'g
 Router::add('/admin/moderate',          ['controller' => 'admin', 'action' => 'moderate'] );
 Router::add('/admin/add_article',       ['controller' => 'admin', 'action' => 'displayAddArticle'] );
 Router::add('/admin/new_article',       ['controller' => 'admin', 'action' => 'addArticle'] );
-Router::add('/admin/modify_article',    ['controller' => 'admin', 'action' => 'updateArticle'] );
 Router::add('/admin/dashboard',         ['controller' => 'admin', 'action' => 'dashboard'] );
 Router::add('/admin/article_dashboard', ['controller' => 'admin', 'action' => 'dashboardArticle'] );
-Router::add('/admin/update_article',    ['controller' => 'admin', 'action' => 'displayUpdateArticle'] );
 Router::add('/admin/delete_article',    ['controller' => 'admin', 'action' => 'deleteArticle'] );
 
+Router::add('/admin/update_article',    ['controller' => 'admin', 'action' => 'displayUpdateArticle'] );
+Router::add('/admin/modify_article',    ['controller' => 'admin', 'action' => 'updateArticle'] );
 // DEBUG
 Router::add('/test', ['controller' => 'default', 'action' => 'test'] );

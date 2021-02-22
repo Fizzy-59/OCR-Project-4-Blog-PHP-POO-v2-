@@ -20,25 +20,26 @@ class UserController extends AbstractController
     {
         // Recover User
         $email = $this->request->request('email');
-        if (Validator::isNotAnEmail($email)) $errors[] = Error::USER_NOT_FOUND;
+        if (Validator::isNotAnEmail($email)) $errors[] = Error::EMAIL_ERROR;
 
         $password = $this->request->request('password');
-        if (Validator::checkMinMaxSmall($password)) $errors[] = Error::USER_NOT_FOUND;
+        if (Validator::checkMinMaxSmall($password)) $errors[] = Error::WRONG_PASSWORD;
 
         $user = $this->entityManager->getRepository(":User")->findOneBy(['email' => $email]);
         if (empty($user)) $errors[] = Error::USER_NOT_FOUND;
 
-        $matchPassword = $user->getPassword();
-        if ($matchPassword != null) $isPasswordCorrect = password_verify($password, $matchPassword);
+        if($user) {
+            $matchPassword = $user->getPassword();
+            if ($matchPassword != null) $isPasswordCorrect = password_verify($password, $matchPassword);
+            if (!$isPasswordCorrect) $errors[] = Error::USER_NOT_FOUND;
+        }
 
-        if (!$isPasswordCorrect) $errors[] = Error::USER_NOT_FOUND;
-
-        if($errors) {
-            $this->render('home/hello.html.twig', ['errors' => $errors[0]]);
-        } else {
+        if (!$errors) {
             $this->session->write('user', $user);
             header("Location: /", 301);
         }
+
+        $this->render('home/hello.html.twig', ['errors' => $errors]);
     }
 
     /**
@@ -76,31 +77,31 @@ class UserController extends AbstractController
             if (Validator::checkMinMaxSmall($password1)) $errors[] = Error::PASSWORD_LENGHT_ERROR;
 
             // Handle errors
-            if ($errors) $this->render('login/register.html.twig',
-                [
-                    'errors' => $errors,
-                    'name' => $name,
-                    'email' => $email
-                ]);
+            if (!$errors) {
+                $password = $this->request->request('password1');
 
-            $password = $this->request->request('password1');
+                // Create new User
+                $user = new User();
+                $user->setName($name);
+                $user->setEmail($email);
+                $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
+                $user->setRole('User');
+                $user->setCreatedAt(Carbon::now());
+                // Save in Database
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
 
-            // Create new User
-            $user = new User();
-            $user->setName($name);
-            $user->setEmail($email);
-            $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
-            $user->setRole('User');
-            $user->setCreatedAt(Carbon::now());
-            // Save in Database
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
-
-            // Redirect to homePage
-            header("Location: /", 301);
+                // Redirect to homePage
+                header("Location: /", 301);
+            }
         }
 
-        $this->render('login/register.html.twig');
+        $this->render('login/register.html.twig',
+            [
+                'errors' => $errors ?? '',
+                'name' => $name ?? '',
+                'email' => $email ?? ''
+            ]);
     }
 
     /**

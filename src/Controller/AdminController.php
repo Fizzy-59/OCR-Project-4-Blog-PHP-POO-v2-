@@ -5,8 +5,10 @@ namespace App\Controller;
 
 
 use App\Entity\Article;
+use App\utils\Error;
 use App\utils\GenerateFake;
 use Blog\Core\AbstractController;
+use Blog\Validator\Validator;
 use Carbon\Carbon;
 
 class AdminController extends AbstractController
@@ -55,43 +57,56 @@ class AdminController extends AbstractController
      */
     public function addArticle()
     {
-        // Recover Admin
-        $title = $this->request->request('title');
-        $introduction = $this->request->request('introduction');
-        $content = $this->request->request('content');
+        if($_POST)
+        {
+            $title = $this->request->request('title');
+            if (Validator::isEmpty($title)) $errors[] = Error::TITLE_ERROR;
+            if (Validator::checkMinMaxBig($title)) $errors[] = Error::TITLE_LENGHT_ERROR;
 
-        // Recover Category for link her to Article
-        $categoryName = $this->request->request('category');;
-        $category = $this->entityManager->getRepository(":Category")->findOneByName($categoryName);
+            $introduction = $this->request->request('introduction');
+            if (Validator::isEmpty($introduction)) $errors[] = Error::INTRODUCTION_ERROR;
+            if (Validator::checkMinMaxBig($introduction)) $errors[] = Error::INTRODUCTION_LENGHT_ERROR;
 
-        $user = $this->entityManager->getRepository(":User")->findOneById(23);
+            $content = $this->request->request('content');
+            if (Validator::isEmpty($content)) $errors[] = Error::CONTENT_ERROR;
+            if (Validator::checkMinMaxGeant($content)) $errors[] = Error::CONTENT_GEANT_LENGHT_ERROR;
 
-        // Set new Article
-        $article = new Article();
-        $article->setTitle($title);
-        $article->setIntroduction($introduction);
-        $article->setContent($content);
-        $article->setCreatedAt(Carbon::now());
-        $article->setUpdatedAt(Carbon::now());
-        $article->setCategory($category);
-        $article->setUser($user);
+            // Recover Category for link her to Article
+            $categoryName = $this->request->request('category');;
+            $category = $this->entityManager->getRepository(":Category")->findOneByName($categoryName);
 
-        // Save in Database
-        $this->entityManager->persist($article);
-        $this->entityManager->flush();
+            $user = $this->entityManager->getRepository(":User")->findOneById(23);
 
-        // Redirect to dashboard Article
-        header("Location: /articles", 301);
-    }
+            if (!$errors) {
+                // Set new Article
+                $article = new Article();
+                $article->setTitle($title);
+                $article->setIntroduction($introduction);
+                $article->setContent($content);
+                $article->setCreatedAt(Carbon::now());
+                $article->setUpdatedAt(Carbon::now());
+                $article->setCategory($category);
+                $article->setUser($user);
 
-    /**
-     * Render view for Add Article
-     */
-    public function displayAddArticle()
-    {
-        $allCategories = $this->entityManager->getRepository(":Category")->findAll();
+                // Save in Database
+                $this->entityManager->persist($article);
+                $this->entityManager->flush();
 
-        $this->render('admin/article/addArticle.html.twig', ['allCategories' => $allCategories]);
+                // Redirect to dashboard Article
+                header("Location: /articles", 301);
+            }
+
+            $allCategories = $this->entityManager->getRepository(":Category")->findAll();
+
+            $this->render('admin/Article/addArticle.html.twig',
+                [
+                    'errors' => $errors ?? '',
+                    'title' => $title ?? '',
+                    'introduction' => $introduction ?? '',
+                    'content' => $content ?? '',
+                    'allCategories' => $allCategories
+                ]);
+        }
     }
 
     /**
@@ -130,31 +145,55 @@ class AdminController extends AbstractController
      */
     public function updateArticle()
     {
-        $title = $this->request->request('title');
-        $introduction = $this->request->request('introduction');
-        $content = $this->request->request('content');
+        if ($_POST)
+        {
+            $title = $this->request->request('title');
+            if (Validator::isEmpty($title)) $errors[] = Error::TITLE_ERROR;
+            if (Validator::checkMinMaxBig($title)) $errors[] = Error::TITLE_LENGHT_ERROR;
 
-        //Recover article
-        $articleId = $this->request->request('articleId');
-        $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
+            $introduction = $this->request->request('introduction');
+            if (Validator::isEmpty($introduction)) $errors[] = Error::INTRODUCTION_ERROR;
+            if (Validator::checkMinMaxBig($introduction)) $errors[] = Error::INTRODUCTION_LENGHT_ERROR;
 
-        // Recover Category for link her to Article
-        $categoryName = $this->request->request('category');
-        $category = $this->entityManager->getRepository(":Category")->findOneByName($categoryName);
+            $content = $this->request->request('content');
+            if (Validator::isEmpty($content)) $errors[] = Error::CONTENT_ERROR;
+            if (Validator::checkMinMaxGeant($content)) $errors[] = Error::CONTENT_GEANT_LENGHT_ERROR;
 
-        // Update Article
-        $article->setTitle($title);
-        $article->setIntroduction($introduction);
-        $article->setContent($content);
-        $article->setCategory($category);
-        $article->setUpdatedAt(Carbon::now());
+            //Recover article
+            $articleId = $this->request->request('articleId');
+            $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
 
-        // Save in Database
-        $this->entityManager->persist($article);
-        $this->entityManager->flush();
+            // Recover Category for link her to Article
+            $categoryName = $this->request->request('category');
+            $category = $this->entityManager->getRepository(":Category")->findOneByName($categoryName);
 
-        // Redirect to dashboard Article
-        header("Location: /admin/article_dashboard", 301);
+            if (!$errors) {
+                // Update Article
+                $article->setTitle($title);
+                $article->setIntroduction($introduction);
+                $article->setContent($content);
+                $article->setCategory($category);
+                $article->setUpdatedAt(Carbon::now());
+
+                // Save in Database
+                $this->entityManager->persist($article);
+                $this->entityManager->flush();
+            }
+
+            // Redirect to dashboard Article
+            header("Location: /admin/article_dashboard", 301);
+        }
+
+        $allCategories = $this->entityManager->getRepository(":Category")->findAll();
+
+        $this->render('admin/Article/updateArticle.html.twig',
+            [
+                'errors' => $errors ?? '',
+                'title' => $title ?? '',
+                'introduction' => $introduction ?? '',
+                'content' => $content ?? '',
+                'allCategories' => $allCategories
+            ]);
     }
 
     /**

@@ -16,4 +16,16 @@ class Error
     const CONTENT_LENGHT_ERROR = 'Le contenu doit être compris entre 3 et 200 caractères.';
     const WRONG_PASSWORD = 'Mot de passe incorrect.';
     const USER_NOT_FOUND = 'Identifiant incorrect.';
+    const UNKNOWN_ERROR = 'Une erreur est survenue';
+
+    // ADMIN
+    const TITLE_ERROR = 'Le titre ne peut être vide.';
+    const TITLE_LENGHT_ERROR = 'Le titre doit être compris entre 3 et 200 caractères.';
+    const INTRODUCTION_ERROR = 'L\'introduction ne peut être vide.';
+    const INTRODUCTION_LENGHT_ERROR = 'L\' introduction doit être compris entre 3 et 200 caractères.';
+    const CONTENT_ERROR = 'Le contenu ne peut être vide.';
+    const CONTENT_GEANT_LENGHT_ERROR = 'Le contenu doit être compris entre 3 et 65000 caractères.';
+
+
+
 }
