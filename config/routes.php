@@ -14,7 +14,7 @@ Router::add('/add_comment', ['controller' => 'default', 'action' => 'addComment'
 // ARTICLE
 Router::add('/article',     ['controller' => 'article', 'action' => 'article'] );
 Router::add('/articles',    ['controller' => 'article', 'action' => 'articles'] );
-Router::add('/add_comment', ['controller' => 'Article', 'action' => 'addComment'] );
+Router::add('/add_comment', ['controller' => 'article', 'action' => 'addComment'] );
 
 // CATEGORY
 Router::add('/category',   ['controller' => 'category', 'action' => 'articleByCategory'] );

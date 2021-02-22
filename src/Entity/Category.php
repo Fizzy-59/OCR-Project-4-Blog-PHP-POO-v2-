@@ -35,7 +35,7 @@ class Category
     // RELATIONS
 
     /**
-     * @OneToMany(targetEntity="Article", mappedBy="category")
+     * @OneToMany(targetEntity="article", mappedBy="category")
      */
     protected $articles;
 

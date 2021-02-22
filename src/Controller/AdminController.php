@@ -53,7 +53,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * Admin logic for Add Article
+     * Admin logic for Add article
      */
     public function addArticle()
     {
@@ -70,14 +70,14 @@ class AdminController extends AbstractController
             if (Validator::isEmpty($content)) $errors[] = Error::CONTENT_ERROR;
             if (Validator::checkMinMaxGeant($content)) $errors[] = Error::CONTENT_GEANT_LENGHT_ERROR;
 
-            // Recover Category for link her to Article
+            // Recover Category for link her to article
             $categoryName = $this->request->request('category');;
             $category = $this->entityManager->getRepository(":Category")->findOneByName($categoryName);
 
             $user = $this->entityManager->getRepository(":User")->findOneById(23);
 
             if (!$errors) {
-                // Set new Article
+                // Set new article
                 $article = new Article();
                 $article->setTitle($title);
                 $article->setIntroduction($introduction);
@@ -91,13 +91,13 @@ class AdminController extends AbstractController
                 $this->entityManager->persist($article);
                 $this->entityManager->flush();
 
-                // Redirect to dashboard Article
+                // Redirect to dashboard article
                 header("Location: /articles", 301);
             }
         }
         $allCategories = $this->entityManager->getRepository(":Category")->findAll();
 
-        $this->render('admin/Article/addArticle.html.twig',
+        $this->render('admin/article/addArticle.html.twig',
             [
                 'errors' => $errors ?? '',
                 'title' => $title ?? '',
@@ -108,13 +108,14 @@ class AdminController extends AbstractController
     }
 
 
+
     /**
-     * Display dashboard for update Article
+     * Display dashboard for update article
      */
     public function dashboardArticle()
     {
         // Recover articles
-        $articles = $this->entityManager->getRepository(":Article")->findAll();
+        $articles = $this->entityManager->getRepository(":article")->findAll();
 
         $this->render('admin/article/dashboardArticle.html.twig', ['articles' => $articles]);
     }
@@ -126,8 +127,8 @@ class AdminController extends AbstractController
     {
         $articleId = $this->request->request('articleId');
 
-        // Recover Article
-        $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
+        // Recover article
+        $article = $this->entityManager->getRepository(":article")->findOneById($articleId);
 
         // Recover Categories
         $categories = $this->entityManager->getRepository(":Category")->findAll();
@@ -140,7 +141,7 @@ class AdminController extends AbstractController
     }
 
     /**
-     * Logic for update Article
+     * Logic for update article
      */
     public function updateArticle()
     {
@@ -159,14 +160,14 @@ class AdminController extends AbstractController
 
             //Recover article
             $articleId = $this->request->request('articleId');
-            $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
+            $article = $this->entityManager->getRepository(":article")->findOneById($articleId);
 
-            // Recover Category for link her to Article
+            // Recover Category for link her to article
             $categoryName = $this->request->request('category');
             $category = $this->entityManager->getRepository(":Category")->findOneByName($categoryName);
 
             if (!$errors) {
-                // Update Article
+                // Update article
                 $article->setTitle($title);
                 $article->setIntroduction($introduction);
                 $article->setContent($content);
@@ -178,13 +179,13 @@ class AdminController extends AbstractController
                 $this->entityManager->flush();
             }
 
-            // Redirect to dashboard Article
+            // Redirect to dashboard article
             header("Location: /admin/article_dashboard", 301);
         }
 
         $allCategories = $this->entityManager->getRepository(":Category")->findAll();
 
-        $this->render('admin/Article/updateArticle.html.twig',
+        $this->render('admin/article/updateArticle.html.twig',
             [
                 'errors' => $errors ?? '',
                 'title' => $title ?? '',
@@ -195,13 +196,13 @@ class AdminController extends AbstractController
     }
 
     /**
-     * Delete Article & comments linked
+     * Delete article & comments linked
      */
     public function deleteArticle()
     {
         $articleId = $this->request->request('id');
 
-        $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
+        $article = $this->entityManager->getRepository(":article")->findOneById($articleId);
         $comments = $this->entityManager->getRepository(":Comment")->findBy(['article' => $articleId]);
 
         // Delete All comments linked at the article

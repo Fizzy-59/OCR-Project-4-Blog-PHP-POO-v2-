@@ -13,12 +13,12 @@ use Carbon\Carbon;
 class ArticleController extends AbstractController
 {
     /**
-     * Display one Article
+     * Display one article
      */
     public function article()
     {
         $id = $this->request->query('id');
-        $article = $this->entityManager->getRepository(":Article")->findOneById($id);
+        $article = $this->entityManager->getRepository(":article")->findOneById($id);
 
         // Render View
         $this->render('article/article.html.twig', ['article' => $article]);
@@ -30,7 +30,7 @@ class ArticleController extends AbstractController
     public function articles()
     {
         $categories = $this->entityManager->getRepository(":Category")->findAll();
-        $articles = $this->entityManager->getRepository(":Article")->findBy([], ['createdAt' => 'DESC']);
+        $articles = $this->entityManager->getRepository(":article")->findBy([], ['createdAt' => 'DESC']);
 
         $this->render('article/articles.html.twig',
             [
@@ -44,9 +44,9 @@ class ArticleController extends AbstractController
      */
     public function addComment()
     {
-        // Recover Article
+        // Recover article
         $articleId = $this->request->request('articleId');
-        $article = $this->entityManager->getRepository(":Article")->findOneById($articleId);
+        $article = $this->entityManager->getRepository(":article")->findOneById($articleId);
 
         // Recover comment
         $content = $this->request->request('comment');

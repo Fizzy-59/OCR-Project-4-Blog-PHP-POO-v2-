@@ -42,7 +42,7 @@ class Comment
 
     // RELATIONS
     /**
-     * @ManyToOne(targetEntity="Article", inversedBy="comments")
+     * @ManyToOne(targetEntity="article", inversedBy="comments")
      * @JoinColumn(name="article_id", referencedColumnName="id")
      */
     protected $article;

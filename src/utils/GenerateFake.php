@@ -85,7 +85,7 @@ class GenerateFake
     }
 
     /**
-     * Generate fake data for Article + link to User & Category
+     * Generate fake data for article + link to User & Category
      */
     public function generateArticle()
     {
@@ -131,7 +131,7 @@ class GenerateFake
     }
 
     /**
-     * Generate fake data for Comment + link to User & Article
+     * Generate fake data for Comment + link to User & article
      */
     public function generateComment()
     {
@@ -152,9 +152,9 @@ class GenerateFake
             $userRepo = $this->entityManager->getRepository(":User")->findOneById($nbRandomUser);
             $comment->setUser($userRepo);
 
-            // Link to Article
+            // Link to article
             $nbRandomArticle = random_int(1, 10);
-            $articleRepo =  $this->entityManager->getRepository(":Article")->findOneById($nbRandomArticle);
+            $articleRepo =  $this->entityManager->getRepository(":article")->findOneById($nbRandomArticle);
             $comment->setArticle($articleRepo);
 
             // Set Validate on True
