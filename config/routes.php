@@ -34,7 +34,6 @@ Router::add('/registration', ['controller' => 'User', 'action' => 'registration'
 // ADMIN
 Router::add('/admin/feed_database',     ['controller' => 'admin', 'action' => 'generateData'] );
 Router::add('/admin/moderate',          ['controller' => 'admin', 'action' => 'moderate'] );
-Router::add('/admin/add_article',       ['controller' => 'admin', 'action' => 'displayAddArticle'] );
 Router::add('/admin/new_article',       ['controller' => 'admin', 'action' => 'addArticle'] );
 Router::add('/admin/dashboard',         ['controller' => 'admin', 'action' => 'dashboard'] );
 Router::add('/admin/article_dashboard', ['controller' => 'admin', 'action' => 'dashboardArticle'] );

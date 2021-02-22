@@ -57,8 +57,7 @@ class AdminController extends AbstractController
      */
     public function addArticle()
     {
-        if($_POST)
-        {
+        if ($_POST) {
             $title = $this->request->request('title');
             if (Validator::isEmpty($title)) $errors[] = Error::TITLE_ERROR;
             if (Validator::checkMinMaxBig($title)) $errors[] = Error::TITLE_LENGHT_ERROR;
@@ -95,19 +94,19 @@ class AdminController extends AbstractController
                 // Redirect to dashboard Article
                 header("Location: /articles", 301);
             }
-
-            $allCategories = $this->entityManager->getRepository(":Category")->findAll();
-
-            $this->render('admin/Article/addArticle.html.twig',
-                [
-                    'errors' => $errors ?? '',
-                    'title' => $title ?? '',
-                    'introduction' => $introduction ?? '',
-                    'content' => $content ?? '',
-                    'allCategories' => $allCategories
-                ]);
         }
+        $allCategories = $this->entityManager->getRepository(":Category")->findAll();
+
+        $this->render('admin/Article/addArticle.html.twig',
+            [
+                'errors' => $errors ?? '',
+                'title' => $title ?? '',
+                'introduction' => $introduction ?? '',
+                'content' => $content ?? '',
+                'allCategories' => $allCategories
+            ]);
     }
+
 
     /**
      * Display dashboard for update Article
@@ -145,8 +144,7 @@ class AdminController extends AbstractController
      */
     public function updateArticle()
     {
-        if ($_POST)
-        {
+        if ($_POST) {
             $title = $this->request->request('title');
             if (Validator::isEmpty($title)) $errors[] = Error::TITLE_ERROR;
             if (Validator::checkMinMaxBig($title)) $errors[] = Error::TITLE_LENGHT_ERROR;
@@ -207,7 +205,7 @@ class AdminController extends AbstractController
         $comments = $this->entityManager->getRepository(":Comment")->findBy(['article' => $articleId]);
 
         // Delete All comments linked at the article
-        foreach ($comments as $comment ) {
+        foreach ($comments as $comment) {
             $this->entityManager->remove($comment);
         }
 
