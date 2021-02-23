@@ -26,7 +26,7 @@ class HomeController extends AbstractController
         // Config constants
         require '../config/swiftMailer.php';
 
-        if ($_POST) {
+        if ($this->request->isMethod('POST')) {
             $name = $this->request->request('name');
             if (Validator::isEmpty($name)) $errors[] = Error::NAME_ERROR;
             if (Validator::checkMinMaxSmall($name)) $errors[] = Error::NAME_LENGHT_ERROR;

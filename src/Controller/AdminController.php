@@ -57,7 +57,7 @@ class AdminController extends AbstractController
      */
     public function addArticle()
     {
-        if ($_POST) {
+        if ($this->request->isMethod('POST')) {
             $title = $this->request->request('title');
             if (Validator::isEmpty($title)) $errors[] = Error::TITLE_ERROR;
             if (Validator::checkMinMaxBig($title)) $errors[] = Error::TITLE_LENGHT_ERROR;

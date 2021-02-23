@@ -58,7 +58,7 @@ class UserController extends AbstractController
      */
     public function registration()
     {
-        if ($_POST) {
+        if ($this->request->isMethod('POST')) {
             $name = $this->request->request('name');
             if (Validator::isEmpty($name)) $errors[] = Error::NAME_ERROR;
             if (Validator::checkMinMaxSmall($name)) $errors[] = Error::NAME_LENGHT_ERROR;
