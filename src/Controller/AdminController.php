@@ -108,7 +108,6 @@ class AdminController extends AbstractController
     }
 
 
-
     /**
      * Display dashboard for update article
      */
