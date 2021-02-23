@@ -59,8 +59,7 @@ class ArticleController extends AbstractController
                     'article' => $article,
                     'errors' => $errors,
                 ]);
-        };
-
+        } else {
         // Recover UserId
         $userId = $this->session->read('user')->getId();
         $user = $this->entityManager->getRepository(":User")->findOneById($userId);
@@ -79,5 +78,7 @@ class ArticleController extends AbstractController
 
         // Render View
         $this->render('article/article.html.twig', ['article' => $article]);
+        }
+
     }
 }

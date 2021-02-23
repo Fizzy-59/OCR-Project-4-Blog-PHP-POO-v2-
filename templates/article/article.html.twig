@@ -38,11 +38,11 @@
             {# Errors #}
             {% for error in errors %}
                 <div class="alert alert-danger" role="alert">
-                    {{ errors }}
+                    {{ error }}
                 </div>
             {% endfor %}
 
-            {# Form #}
+            {# Form  add comment #}
             <div class="row">
                 <div class="col-lg-8 col-md-8 mx-auto">
                     <div class="collapse" id="collapseExample">
@@ -50,7 +50,7 @@
                             <div class="form-group ">
                                 <form action="/add_comment" method="post">
                                     <input class="col-lg-6 col-sm-6 " type="text" id="comment" name="comment" required
-                                           minlength="3">
+                                           minlength="0">
                                     <input type="hidden" name="articleId" value="{{ article.id }}"/>
                                     <input class="btn btn-primary" type="submit">
                                 </form>

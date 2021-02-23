@@ -28,7 +28,7 @@ class UserController extends AbstractController
         $user = $this->entityManager->getRepository(":User")->findOneBy(['email' => $email]);
         if (empty($user)) $errors[] = Error::USER_NOT_FOUND;
 
-        if($user) {
+        if ($user) {
             $matchPassword = $user->getPassword();
             if ($matchPassword != null) $isPasswordCorrect = password_verify($password, $matchPassword);
             if (!$isPasswordCorrect) $errors[] = Error::USER_NOT_FOUND;
