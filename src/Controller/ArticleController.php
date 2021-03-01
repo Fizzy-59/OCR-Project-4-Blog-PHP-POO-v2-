@@ -19,6 +19,7 @@ class ArticleController extends AbstractController
     {
         $id = $this->request->query('id');
         $article = $this->entityManager->getRepository(":article")->findOneById($id);
+        if(!$article) header("Location: /", 301);
 
         // Render View
         $this->render('article/article.html.twig', ['article' => $article]);
