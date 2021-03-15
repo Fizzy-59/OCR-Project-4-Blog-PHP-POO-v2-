@@ -1,0 +1,40 @@
+{% set pageName = 'MAJ article' %}
+
+
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row" id="row_style">
+            <h4 class="text-center">Mettre à jour l'article :</h4>
+            <div class="col-md-4   col-md-offset-4">
+                <form method="post" action="/admin/modify_article">
+                    <input type="hidden" name="articleId" value="{{ article.id }}"/>
+                    <div class="form-group">
+                        <input name="title" type="text" class="form-control" placeholder="Title"
+                               value="{{ article.title }}">
+                    </div>
+                    <textarea name="introduction" id="editor" cols="50" rows="10">{{ article.introduction }}</textarea>
+                    <br>
+                    <textarea name="content" id="editor" cols="50" rows="20">{{ article.content }}.</textarea>
+                    <br>
+
+                    <div class="form-group">
+                        <p>
+                            <label for="categories">Catgérorie liée</label><br/>
+                            <select name="category" id="category">
+                                {% for category in categories %}
+                                    <option value={{ category.name }}>{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Modifier</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

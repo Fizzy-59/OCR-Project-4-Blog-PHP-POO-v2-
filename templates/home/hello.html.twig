@@ -1,0 +1,85 @@
+{% set pageName = 'Accueil' %}
+
+{% extends "base.html.twig" %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+
+                {# Text at Left #}
+                <div class="row">
+                    <div class="col 3">
+                        <p>Bonjour !</p>
+                        <p>Je m'appelle Romain DEVILLEZ, et je suit le développeur qu'il vous faut !
+                            Actuellement en formation pour devenir développeur
+                            web PHP/Symfony grâce à OpenclassRooms. J'ai débuté cette formation au mois de septembre
+                            2019, et j'ai déja beaucoup appris:</p>
+                    </div>
+
+                    {# Photo #}
+                    <div class="col">
+                        <img src="/media/pictures/romain.jpg" alt="Ma photo" class="pull-right" height="300"/>
+                    </div>
+
+                    <p>- J'ai commencé par ré-apprendre le language HTML 5 ainsi que le CSS 3. Une formalité
+                        obligatoire pour partir sur de bonnes bases...<br/>
+                        - Ensuite, j'ai commencé à manipuler le CMS Wordpress. Grâce à mes aquis, j'ai mis en place
+                        un site de location de chalets.<br/>
+                        - Je me suis ensuite penché sur les étapes qui caractérisent la gestion d'un projet :
+                        diagrammes UML, gestions d'une base de données SQL, etc...<br/>
+                        - Me voici finalement ici, sur ce blog que j'ai appris à réaliser entièrement en PHP orienté
+                        objet.</p>
+                    <p>Et ce n'est pas terminé ! Ma formation continue et j'ai encore beaucoup de choses à
+                        apprendre.</p>
+                </div>
+                <p>Vous pouvez me contacter en remplissant le formulaire suivant :</p>
+
+                {# Form contact #}
+                {# Errors #}
+                {% for error in errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+                <form name="contactForm" id="contactForm" method="post" action="/contact_form">
+                    <input type="hidden" name="subject" value="Formulaire de contact">
+                    <input type="hidden" name="access" value="stopspam">
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label>Nom et prénom</label>
+                            <input type="text" class="form-control" placeholder="Nom et prénom" name="name" id="name"
+                                   required
+                                   data-validation-required-message="Veuillez entrer vos noms et prénoms."
+                                   value="{{ name }}">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label>Adresse Email</label>
+                            <input type="email" class="form-control" placeholder="Adresse Email" name="email" id="email"
+                                   required data-validation-required-message="Veuillez votre adresse email."
+                                   value="{{ email }}">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label>Message</label>
+                            <textarea rows="5" class="form-control" placeholder="Message" name="message" id="message"
+                                      required
+                                      data-validation-required-message="Veuillez entrer un message.">{{ content }}</textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <div id="success"></div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary" id="sendMessageButton">Envoyer</button>
+                    </div>
+                </form>
+                <p>Retrouvez également mon CV en cliquant <a href="/media/cv.pdf">ici</a>.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

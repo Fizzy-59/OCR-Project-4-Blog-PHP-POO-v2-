@@ -1,0 +1,92 @@
+{% set pageName = 'article' %}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <article>
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <h4 class="post-meta">Catégorie : {{ article.category.name }}</h4>
+                    <p class="post-meta"> Posté par {{ article.user.name }}
+                        le {{ article.createdAt|date('d-m-Y à H:i') }}.
+                        {% if article.updatedAt != null %}
+                            Mis à jour le {{ article.updatedAt|date('d-m-Y à H:i') }}
+                        {% endif %}
+                    </p>
+                    <h1 class="post-title">{{ article.title }}</h1>
+                    <h3 class="post-subtile">{{ article.introduction }}</h3>
+                    <p class="post-meta">{{ article.content }}</p>
+                </div>
+            </div>
+        </article>
+        <hr>
+
+        {# Add Comment #}
+        {% if session == true %}
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                           aria-expanded="false" aria-controls="collapseExample">
+                            Ajouter un commentaire </a>
+                    </p>
+                </div>
+            </div>
+
+            {# Errors #}
+            {% for error in errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+
+            {# Form  add comment #}
+            <div class="row">
+                <div class="col-lg-8 col-md-8 mx-auto">
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <div class="form-group ">
+                                <form action="/add_comment" method="post">
+                                    <input class="col-lg-6 col-sm-6 " type="text" id="comment" name="comment" required
+                                           minlength="0">
+                                    <input type="hidden" name="articleId" value="{{ article.id }}"/>
+                                    <input class="btn btn-primary" type="submit">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+
+        <br>
+
+        {# Comment #}
+        {% for comment in article.comments %}
+            {% if comment.validate == true %}
+                <div class="row mb-2">
+                    <div class="col-lg-8 col-md-10 mx-auto">
+                        <div class="card card-white post p-2">
+                            <div class="post-heading">
+                                <div class="float-left meta">
+                                    <div class="title h5">
+                                        <a href="#"><b>{{ comment.user.name }}</b></a>
+                                    </div>
+                                    <h6 class="text-muted time">{{ comment.createdAt|date('d-m-Y à H:i') }}</h6>
+                                </div>
+                            </div>
+                            <div class="post-description">
+                                <p>{{ comment.content }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
