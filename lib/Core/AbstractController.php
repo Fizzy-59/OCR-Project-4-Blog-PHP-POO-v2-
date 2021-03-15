@@ -6,6 +6,9 @@ namespace Blog\Core;
 
 use Blog\Http\Request;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
 abstract class AbstractController
@@ -26,14 +29,16 @@ abstract class AbstractController
      *
      * @param $view
      * @param array $params
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     protected function render($view, $params = [])
     {
         $loader = new FilesystemLoader(ROOT_DIR.'/templates');
         $twig = new Environment($loader);
+
+        // Inject session in twig
         $twig->addGlobal('session', $this->session->get());
         $template = $twig->load($view);
 
